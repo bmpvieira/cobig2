@@ -1,0 +1,90 @@
+css: cobig2.css
+navbar:
+logo: logo.png
+logotext:
+registration: false
+author:
+  name: Bruno Vieira
+  url: http://bmpvieira.com
+year: 2012
+title: Computational Biology & Population Genomics Group
+title_short: CoBiG²
+meta:
+  description: We are a research group of the Centro de Biologia Ambiental (CBA, Environmental Biology Centre), of the Faculty of Sciences of the University of Lisbon (FCUL), and associated with the Academic Department of Animal Biology (DBA) for teaching.
+  author: Bruno Vieira
+ganalytics:
+  production:
+  staging:
+hosts:
+  development: localhost:3000
+  staging: staging.cobig2.com
+  production: cobig2.com
+contents_url: https://api.github.com/repos/bmpvieira/python101/contents
+menuitems:
+  - txt: Work
+    dropdown:
+      - txt: Papers
+        href: /view1
+      - txt: Posters
+        href: /view2
+      - txt: Talks
+        href: /talks
+      - txt: Software
+        href: /software
+  - txt: About
+    dropdown:
+      - txt: Research areas
+        href: /research
+      - txt: Members
+        href: /members
+  - txt: Courses
+    href: /courses
+  - txt: Join
+    href: /join
+  - txt: Media
+    dropdown:
+      - txt: Videos
+        href: /videos
+      - txt: Photos
+        href: /photos
+  - txt: Contact
+    href: /contact
+menuitems_old:
+  - txt: Members
+    dropdown:
+      - txt: Current members
+        href: /current_members
+      - txt: Former members
+        href: /former_members
+      - txt: Colaborators
+        href: /colaborators
+  - txt: Research
+    dropdown:
+      - txt: Research areas
+        href: /research_areas
+      - txt: Software
+        href: /software
+  - txt: Publications
+    href: /publications
+  - txt: Projects
+    href: /projects
+  - txt: Courses
+    href: /courses
+  - txt: Opportunities
+    href: /opportunities
+  - txt: Community
+    dropdown:
+      - txt: Event log
+        href: /event_log
+      - txt: Blog
+        href: /blog
+  - txt: Media
+    dropdown:
+      - txt: Videos
+        href: /videos
+      - txt: Photos
+        href: /photos
+  - txt: Contact
+    href: /contacts
+
+slideDownDelay: 500

@@ -1,0 +1,240 @@
+@import 'nib'
+@import 'https://s3.amazonaws.com/eseb2013/css/select2/select2.8e4d0297a17ac45fe7e812fbb68c8680.css'
+
+/*
+ * Non-responsive layout settings
+ */
+
+html
+  height 100%
+  background url(/img/bg.png) repeat fixed
+
+body
+  height 100%
+  font-family "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
+  color #333333
+  background-color transparent
+
+p
+  font-family 'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif
+
+p.big
+  font-size 16pt
+  line-height 1.5
+  span.label.label-important
+    font-size 14pt
+
+h1
+  text-align center
+
+.page-header
+  border-bottom 1px solid #ddd
+
+.container-fluid .content
+  background white
+  background linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%)
+  border 2px solid #999999
+  border-radius 5px
+  box-shadow 0px 5px 5px #000000
+  margin-bottom 10px
+  padding 20px
+  display inline-block
+
+article
+  text-shadow 1px 1px 0px #fff // nice subtle inset effect
+
+.nav-pills
+  text-shadow none
+
+.carousel-inner
+  text-shadow none
+
+article aside 
+  margin-left 0
+  padding-left 19px
+  border-left 1px solid #eee
+  text-align center
+
+footer
+  border-top 1px solid #EEE
+  padding-top 5px
+  padding-bottom 0px
+  font-size .8em
+  text-align center
+
+.centered
+  text-align center
+
+// Twitter Boostrap
+
+.navbar .nav > li > a
+  line-height 30px
+  padding 10px 10px 10px
+
+.navbar.navbar-fixed-top.navbar-inverse
+  font-family 'Ubuntu', 'Helvetica Neue', Helvetica, Arial, sans-serif
+
+.carousel-inner
+  text-align center
+
+.carousel .item > img
+  width 100%
+
+.thumbnail > .loading > img
+  height 150px
+
+.thumbnails
+  text-align center
+
+.thumbnails > li
+  display inline-block 
+  float none
+
+.nav-collapse .nav > li > a.build,
+.nav-collapse .dropdown-menu a.build 
+  color #666
+
+// Logo in navbar
+
+.navbar .brand
+  padding 3px 15px 3px
+
+img.logoimg
+  max-width none
+  padding-right 5px
+
+img.navpic
+  height 40px
+  vertical-align middle
+
+img.broken
+  transform rotate(7deg)
+
+#logotext
+  color rgba(240, 240, 240, 0.85)
+  text-shadow 0 -1px 0 rgba(0, 0, 0, 0.2)
+  font-weight 400
+  height 30px
+  display inline-block
+  vertical-align middle
+  font-size 0.7em
+  line-height 1.1em
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust:none;
+  font-smooth always
+  -webkit-font-smoothing: antialiased;
+  zoom: 1; *display: inline; // IE < 8: fake inline-block
+
+#logotext .serif
+  font-family "Droid Serif", Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
+
+#logotext .smalltext
+  font-size .7em
+
+#logotext .bigtext 
+  font-size 1.2em
+  font-weight 400
+
+/* .navbar-form .input-append .btn mis-alignment 
+ * https://github.com/twitter/bootstrap/issues/4680
+ * Should be fixed in 2.1.1
+ */
+.navbar-form .input-append .btn, .navbar-form .input-prepend .btn
+  margin-top 0
+.navbar-form .btn, .navbar-form .btn-group .appendedbtn
+  padding 4px
+
+
+/*
+ * Responsive layout settings
+ */
+
+// Twitter bootstrap settings
+.navbar-fixed-top .container, .navbar-fixed-bottom .container
+  // width 940px to center navbar
+  width auto
+  padding-left 10px
+  margin-bottom 0
+
+/*
+ * Account selection in login form settings
+ */
+
+#account
+  width 4%
+
+.account-select
+  width auto
+  i
+    font-size 22px
+
+.account-select-dropdown
+  min-width 135px
+  transform translate(-60%, 2%)
+  color #444
+  border-radius 3px 3px 3px 3px
+  span
+    vertical-align top
+  i
+    font-size 22px
+
+
+.media
+  img
+    margin-right 10px
+    width 200px
+
+
+// for JQuery.slideDown
+.content
+  display inline-block
+  opacity 0
+
+.display
+  transition opacity .8s ease, top .4s
+  opacity 1
+
+.controls.noinput
+  padding-top 5px
+
+.popover.italics
+  width auto
+
+/*
+ * Animations
+ */
+.loading
+  background url(https://s3.amazonaws.com/eseb2013/img/style/loading.eb4bfcf1a319f71cb092cc4b74e5be0e.gif) no-repeat center
+.fadein
+  opacity 0
+  transition opacity 2s
+//.hide
+//  display none
+
+/*
+ * Media queries
+ */
+
+
+@media (min-width: 980px)
+  /* to center navbar
+   *.navbar-inner .container
+   *  width 980px
+   */
+  .container-fluid
+    width 980px
+    margin 0 auto
+  /*#login-field
+    display none*/
+
+@media (max-width: 1280px)
+  .navbar-fixed-top
+    margin-bottom 0
+
+@media (max-width: 1324px)
+  #logotext
+    display none
+
+@media (max-width: 375px)
+  #logotext
+    display none

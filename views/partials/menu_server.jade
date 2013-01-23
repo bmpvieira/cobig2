@@ -1,0 +1,23 @@
+.navbar.navbar-fixed-top(ng-controller='AppCtrl')
+  .navbar-inner
+    .container
+      a#menucollapse.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+        strong Menu
+      a.brand.menulnk(href="/")
+        img.logoimg(src="img/logo.png")
+      .nav-collapse
+        ul.nav
+          each item in menuitems
+            if 'undefined' !== typeof item.dropdown
+              li.dropdown
+                a#program.dropdown-toggle(data-toggle='dropdown', href='#')
+                  | #{item.txt}
+                  b.caret
+                ul.dropdown-menu(role="menu", aria-labelledby=item.txt)
+                  each subitem in item.dropdown
+                    li
+                      a.menulnk(href=subitem.href, class= subitem.href === '/build' ? 'build' : '')= subitem.txt
+            else
+              li
+                a.menulnk(href=item.href, class= item.href === '/build' ? 'build' : '')= item.txt
+                

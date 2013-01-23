@@ -1,0 +1,15 @@
+{
+  "name": "cobig2_client",
+  "version": "1.0.0",
+  "main": [
+    "./css/app.css",
+    "./js/app.js"
+  ],
+  "dependencies": {
+    "jquery": "1.8.3",
+    "bootstrap": "2.2.2",
+    "coffee-script": "~1.4.0",
+    "marked": "~0.2.7",
+    "angular-complete": "latest"
+  }
+}
