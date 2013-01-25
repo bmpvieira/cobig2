@@ -1,0 +1,16 @@
+.container-fluid
+  .row-fluid
+    .span6.content.gradient(ng-show='user')
+      h2 Members
+      ul.thumbnails
+        li.thumbnails_span(ng-repeat='thumbnail in thumbnails')
+          a.thumbnail(ng-href='{{path}}/{{thumbnail.id}}')
+            .loading
+              img.img-polaroid.fadein(
+                onload='this.style.opacity="1";'
+                style='height: 100px;'
+                ng-src='{{thumbnail.pictureUrl}}'
+                alt='{{thumbnail.firstName}} {{thumbnail.lastName}}')
+            h5 {{thumbnail.firstName}} {{thumbnail.lastName}}
+            p {{thumbnail.headline}}
+            p {{detail}}

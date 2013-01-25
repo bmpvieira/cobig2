@@ -2,13 +2,15 @@
 express = require 'express'
 yaml = require 'js-yaml'
 assets = require 'connect-assets'
+
 routes = require './routes'
 api = require './routes/api'
+config = require './config.yaml'
+
 app = module.exports = express()
 
-app.locals require './config.yaml'
-
 # Configuration
+app.locals config
 app.configure ->
   app.use assets()
   app.set 'views', "#{__dirname}/views"
@@ -32,6 +34,8 @@ app.get '/partials/:name', routes.partials
 
 # JSON API
 app.get '/api/name', api.name
+app.get '/api/members', api.members
+app.get '/api/members/:id', api.members
 
 # redirect all others to the index (HTML5 history)
 app.get '*', routes.index

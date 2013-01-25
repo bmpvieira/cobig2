@@ -30,8 +30,3 @@ html(lang='en', ng-app="app")
       != js('services')
       != js('directives')
       != js('controllers')
-      :coffeescript
-        # After loading img, trigger resize to re-center content
-        # TODO: Change this to directive or watch when img change...
-        $(window).load ->
-          $(window).resize()

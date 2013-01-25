@@ -1,4 +1,4 @@
 .container-fluid
   .row-fluid
-    .span6.content.gradient
-      span(app-bind-html-unsafe-ready='content')
+    .span6.content.gradient(ng-class='{display: content}', ng-show='content')
+      span(ng-cloak, ng-bind-html-unsafe='content')
