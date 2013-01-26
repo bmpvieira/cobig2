@@ -1,18 +1,18 @@
 .navbar.navbar-fixed-top(ng-controller='AppCtrl')
   .navbar-inner(ng-cloak)
     .container
-      a#menucollapse.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
-        strong Menu
-      a.brand.menulnk(href="/")
+      a#menucollapse.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse', href='#')
+        i.icon-chevron-down
+      a.brand.menulnk(href='/')
         img.logoimg(src="img/logo.png")
       .nav-collapse
         ul.nav
           li.dropdown(ng-repeat='item in menu | filter: hasDropdown')
-            a.dropdown-toggle(data-toggle='dropdown', data-target='#', href='/')
+            a.dropdown-toggle(data-toggle='dropdown', href='#')
               | {{item.text}}
               b.caret
             ul.dropdown-menu(role="menu", aria-labelledby='{{item.text}}')
-              li(ng-repeat='subitem in item.dropdown')
+              li.item(ng-repeat='subitem in item.dropdown')
                 a.menulnk(href='{{subitem.href}}', ng-class="{build: subitem.href == '/build'}") {{subitem.text}}
-          li(ng-repeat='item in menu | filter: hasntDropdown')
+          li.item(ng-repeat='item in menu | filter: hasntDropdown')
             a.menulnk(ng-href='{{item.href}}', ng-class="{build: item.href == '/build'}") {{item.text}}

@@ -99,6 +99,11 @@ footer
 .navbar .brand
   padding 3px 15px 3px
 
+img
+  display block
+  margin-left auto
+  margin-right auto
+
 img.logoimg
   max-width none
   padding-right 5px
@@ -188,7 +193,10 @@ img.broken
 // for JQuery.slideDown
 .content
   display inline-block
-  opacity 0
+  opacity 0 // hide until ready
+  // adjust size up to bootstrap span6
+  width auto;
+  max-width 48.717948717948715%
 
 .display
   transition opacity .8s ease .5s, top .4s ease .2s
@@ -211,21 +219,19 @@ img.broken
 //.hide
 //  display none
 
+
 /*
  * Media queries
  */
-
-
 @media (min-width: 980px)
-  /* to center navbar
-   *.navbar-inner .container
-   *  width 980px
-   */
   .container-fluid
     width 980px
     margin 0 auto
-  /*#login-field
-    display none*/
+
+@media (max-width: 979px)
+  .span6.content.gradient.display
+    max-width 100%
+    width auto
 
 @media (max-width: 1280px)
   .navbar-fixed-top
@@ -238,3 +244,12 @@ img.broken
 @media (max-width: 375px)
   #logotext
     display none
+
+
+/* 
+  Allow angular.js to be loaded in body, hiding cloaked elements until 
+  templates compile.  The !important is important given that there may be 
+  other selectors that are more specific or come later and might alter display.  
+ */
+[ng\:cloak], [ng-cloak], .ng-cloak
+  display none !important

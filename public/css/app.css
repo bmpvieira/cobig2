@@ -22,6 +22,7 @@ footer{border-top:1px solid #eee;padding-top:5px;padding-bottom:0;font-size:.8em
 .thumbnails > li{display:inline-block;float:none}
 .nav-collapse .nav > li > a.build,.nav-collapse .dropdown-menu a.build{color:#666}
 .navbar .brand{padding:3px 15px 3px}
+img{display:block;margin-left:auto;margin-right:auto}
 img.logoimg{max-width:none;padding-right:5px}
 img.navpic{height:40px;vertical-align:middle}
 img.broken{-webkit-transform:rotate(7deg);-moz-transform:rotate(7deg);-o-transform:rotate(7deg);-ms-transform:rotate(7deg);transform:rotate(7deg)}
@@ -39,14 +40,15 @@ img.broken{-webkit-transform:rotate(7deg);-moz-transform:rotate(7deg);-o-transfo
 .account-select-dropdown span{vertical-align:top}
 .account-select-dropdown i{font-size:22px}
 .media img{margin-right:10px;width:200px}
-.content{display:inline-block;opacity:0;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);filter:alpha(opacity=0)}
+.content{display:inline-block;opacity:0;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);filter:alpha(opacity=0);width:auto;max-width:48.717948717948715%}
 .display{-webkit-transition:opacity .8s ease .5s, top .4s ease .2s;-moz-transition:opacity .8s ease .5s, top .4s ease .2s;-o-transition:opacity .8s ease .5s, top .4s ease .2s;-ms-transition:opacity .8s ease .5s, top .4s ease .2s;transition:opacity .8s ease .5s,top .4s ease .2s;opacity:1;-ms-filter:none;filter:none}
 .controls.noinput{padding-top:5px}
 .popover.italics{width:auto}
 .loading{background:url("https://s3.amazonaws.com/eseb2013/img/style/loading.eb4bfcf1a319f71cb092cc4b74e5be0e.gif") no-repeat center}
 .fadein{opacity:0;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);filter:alpha(opacity=0);-webkit-transition:opacity 2s;-moz-transition:opacity 2s;-o-transition:opacity 2s;-ms-transition:opacity 2s;transition:opacity 2s}
 @media (min-width: 980px){.container-fluid{width:980px;margin:0 auto}
+}@media (max-width: 979px){.span6.content.gradient.display{max-width:100%;width:auto}
 }@media (max-width: 1280px){.navbar-fixed-top{margin-bottom:0}
 }@media (max-width: 1324px){#logotext{display:none}
 }@media (max-width: 375px){#logotext{display:none}
-}
+}[ngcloak],[ng-cloak],.ng-cloak{display:none !important}

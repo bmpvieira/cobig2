@@ -31,14 +31,17 @@ angular
         $(window).resize() # to trigger .content re-centering
         # Content vertical and horizontal re-centering
         oldCenter = $.contentCenter()
-        recenter = ->
+        recenter = (interval) ->
           setTimeout =>
             newCenter = $.contentCenter()
             diff = oldCenter - newCenter
             if -0.1 > diff > 0.1
-              console.log diff
               oldCenter = newCenter
               recenter()
-          , 800
-        recenter()
+          , interval
+        recenter(800)
+        recenter(3000)
+        # hide navbar for mobile
+        $('.nav-collapse').collapse()
+        $('.nav-collapse').collapse('hide')
   ])

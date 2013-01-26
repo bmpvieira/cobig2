@@ -28,6 +28,11 @@ angular
                   $scope.details[id].isvisible = false
                 API.get {path: 'members', subpath: id}, (details) ->
                   $scope.details[id].data = details.data
+          else if 'papers' is $scope.views[$routeParams.path]
+            $scope.templateUrl = 'partials/papers'
+            API.get {path: 'papers'}, (papers) ->
+              $scope.papers = papers.documents
+              $scope.$broadcast 'controllerDone'
         else
           $scope.templateUrl = 'partials/markdown'
           # Get content from markdown files
@@ -35,9 +40,4 @@ angular
           Content.get {file: $routeParams.path, ext: 'md'}, (content) ->
             $scope.content = marked Base64.decode content.content
             $scope.$broadcast 'controllerDone'
-  ])
-  .controller('MembersCtrl', ['$rootScope', '$routeParams', 'API'
-    ($scope, $routeParams, API) ->
-      API.get "members/#{$routeParams.id}", (data) ->
-        $scope.detail = data
   ])

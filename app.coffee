@@ -36,6 +36,7 @@ app.get '/partials/:name', routes.partials
 app.get '/api/name', api.name
 app.get '/api/members', api.members
 app.get '/api/members/:id', api.members
+app.get '/api/papers', api.papers
 
 # redirect all others to the index (HTML5 history)
 app.get '*', routes.index
