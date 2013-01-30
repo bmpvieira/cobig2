@@ -1,6 +1,6 @@
 .container-fluid
   .row-fluid
-    .span6.content.gradient(ng-show='papers')
+    .span6.content.gradient(app-center)
       input.input-medium.search-query.pull-right(type='text', ng-model='search', placeholder='Search in all fields...')
       br
       h1 Papers
@@ -8,7 +8,7 @@
         ul.unstyled(ng-repeat='paper in papers | filter: search | orderBy: year')
           li
             span(ng-repeat='author in paper.authors') {{author.surname}} {{author.forename[0]}}{{$last && ': ' || ', '}}
-            a(ng-href='{{paper.url}}') {{paper.title}}
+            a(ng-href='{{paper.url}}') {{paper.title}} 
             em {{paper.publisher}} 
             | {{paper.year}}, 
             strong {{paper.volume}}.{{paper.issue}}

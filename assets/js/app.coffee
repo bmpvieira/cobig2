@@ -26,24 +26,9 @@ angular
       $scope.$on 'viewsLoaded', ->
         $route.reload()
 
-      # When rendering finished, try to center content and display it
+      # When rendering is mostly finished
       $scope.$on '$includeContentLoaded', ->
-        $(window).resize() # to trigger .content re-centering
-        # Content vertical and horizontal re-centering
-        oldCenter = $.contentCenter()
-        recenter = (interval) ->
-          setTimeout =>
-            newCenter = $.contentCenter()
-            diff = oldCenter - newCenter
-            if -0.1 > diff > 0.1
-              oldCenter = newCenter
-              recenter()
-            else
-              $('.content').addClass 'display'
-          , interval
-        recenter(1000)
-        recenter(3000)
-        # hide navbar for mobile
+        # initialize navbar hiding when menu clicked for mobile view
         $('.nav-collapse').collapse()
         $('.nav-collapse').collapse('hide')
   ])

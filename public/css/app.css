@@ -17,7 +17,7 @@ footer{border-top:1px solid #eee;padding-top:5px;padding-bottom:0;font-size:.8em
 .navbar.navbar-fixed-top.navbar-inverse{font-family:'Ubuntu','Helvetica Neue',Helvetica,Arial,sans-serif}
 .carousel-inner{text-align:center}
 .carousel .item > img{width:100%}
-li.thumbnail.details-hidden,li.thumbnail.details-shown{margin-left:0;margin-right:1%;margin-bottom:1%;}
+li.thumbnail.details-hidden,li.thumbnail.details-shown{margin-left:0;margin-right:1%;margin-bottom:1%;-webkit-transition:all 1s ease;-moz-transition:all 1s ease;-o-transition:all 1s ease;-ms-transition:all 1s ease;transition:all 1s ease;}
 li.thumbnail.details-hidden button,li.thumbnail.details-shown button{height:196px}
 a.icon{margin-right:2%}
 .details > dl{margin:0}
@@ -31,6 +31,7 @@ img.broken{-webkit-transform:rotate(7deg);-moz-transform:rotate(7deg);-o-transfo
 #logotext .serif{font-family:"Droid Serif",Constantia,"Lucida Bright",Lucidabright,"Lucida Serif",Lucida,"DejaVu Serif","Bitstream Vera Serif","Liberation Serif",Georgia,serif}
 #logotext .smalltext{font-size:.7em}
 #logotext .bigtext{font-size:1.2em;font-weight:400}
+.search{padding-top:5px;padding-left:20px}
 .navbar-form .input-append .btn,.navbar-form .input-prepend .btn{margin-top:0}
 .navbar-form .btn,.navbar-form .btn-group .appendedbtn{padding:4px}
 .navbar-fixed-top .container,.navbar-fixed-bottom .container{width:auto;padding-left:10px;margin-bottom:0}
