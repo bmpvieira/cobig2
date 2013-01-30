@@ -80,15 +80,18 @@ footer
 .carousel .item > img
   width 100%
 
-.thumbnail > .loading > img
-  height 150px
+li.thumbnail.details-hidden, li.thumbnail.details-shown
+  margin-left 0
+  margin-right 1%
+  margin-bottom 1%
+  button
+    height 196px
 
-.thumbnails
-  text-align center
+a.icon
+  margin-right 2%
 
-.thumbnails > li
-  display inline-block 
-  float none
+.details > dl
+  margin 0
 
 .nav-collapse .nav > li > a.build,
 .nav-collapse .dropdown-menu a.build 
@@ -189,6 +192,14 @@ img.broken
     margin-right 10px
     width 200px
 
+.details > dl
+  margin 0
+
+.details-show
+  width 65.74585635359117%
+
+.details-hidden
+  width 31.491712707182323%
 
 // for JQuery.slideDown
 .content
@@ -199,7 +210,7 @@ img.broken
   max-width 48.717948717948715%
 
 .display
-  transition opacity .8s ease .5s, top .4s ease .2s
+  transition opacity 1s ease 1.5s, top .6s ease 1.2s
   opacity 1
 
 .controls.noinput
@@ -229,7 +240,7 @@ img.broken
     margin 0 auto
 
 @media (max-width: 979px)
-  .span6.content.gradient.display
+  .content.gradient.display
     max-width 100%
     width auto
 
@@ -252,4 +263,5 @@ img.broken
   other selectors that are more specific or come later and might alter display.  
  */
 [ng\:cloak], [ng-cloak], .ng-cloak
-  display none !important
+  //display none !important
+  opacity 0 !important

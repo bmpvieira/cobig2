@@ -1,25 +1,16 @@
-.container-fluid
-  .row-fluid
-    .span6.content.gradient(ng-class='{display: thumbnails}', ng-show='thumbnails')
-      h2 Members
-      ul.thumbnails
-        li.thumbnails_span(ng-repeat='thumbnail in thumbnails')
-          a.thumbnail(ng-click='getDetails(thumbnail.id)')
-            .loading
-              img.img-polaroid.fadein(
-                onload='this.style.opacity="1";'
-                style='height: 100px;'
-                ng-src='{{thumbnail.pictureUrl}}'
-                alt='{{thumbnail.firstName}} {{thumbnail.lastName}}')
-            h5 {{thumbnail.firstName}} {{thumbnail.lastName}}
-            p {{thumbnail.headline}}
-          .details(ng-cloak, ng-show='details[thumbnail.id].isvisible')
-            .cloak(ng-cloak, ng-show='details[thumbnail.id].data')
-              strong summary:
-              p(ng-cloak, style="text-align: left;") {{details[thumbnail.id].data.summary}}
-              strong e-mail: 
-              | {{details[thumbnail.id].data.emailAddress}}
-              br
-              a(ng-href='//twitter.com/{{details[thumbnail.id].data.primaryTwitterAccount.providerAccountName}}') Twitter
-              br
-              a(ng-href='{{details[thumbnail.id].data.publicProfileUrl}}') LinkedIn
+li.thumbnail.details-hidden(class='{{detailsShow && "span12" || "span4"}}')
+  button(class='{{detailsShow && "span4" || "span12"}}')
+    .loading
+      img.img-polaroid.fadein(
+        onload='this.style.opacity="1";'
+        style='height: 100px;'
+        ng-src='{{picture}}'
+        alt='{{title}}')
+    h5 {{title}}
+    p {{body}}
+  .details-show.span8(ng-cloak, ng-show='detailsShow')
+    .details(ng-cloak, ng-show='details')
+      dl(ng-repeat='field in details.fields')
+        dt {{field.title}}
+        dd {{field.body}}
+      a.icon(ng-repeat='link in details.links', class='icon-{{link.icon}}', ng-href='{{link.url}}')

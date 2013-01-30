@@ -1,0 +1,12 @@
+.container-fluid
+  .row-fluid
+    .content.gradient(ng-show='thumbnails')
+      h2 Members
+      ul.span12
+        app-thumbnail(
+          ng-repeat='thumbnail in thumbnails'
+          id='{{thumbnail.id}}'
+          title='{{thumbnail.firstName}} {{thumbnail.lastName}}'
+          body='{{thumbnail.headline}}'
+          picture='{{thumbnail.pictureUrl}}'
+          get-details='getDetails(id, callback)')
