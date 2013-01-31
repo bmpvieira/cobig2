@@ -1,0 +1,14 @@
+.container-fluid
+  .row-fluid
+    .content.gradient(app-center)
+      #carousel.carousel.slide
+        .carousel-inner
+          .item(ng-repeat='photo in photos', class='{{$first && "active" || ""}}')
+            img(ng-src='{{photo.images[3].source}}')
+            .carousel-caption
+              h4 {{photo.name}}
+              p {{photo.place.name}}
+        .carousel-control.left(href='#carousel', data-slide='prev') &lsaquo;
+        .carousel-control.right(href='#carousel', data-slide='next') &rsaquo;
+script
+  $('.carousel').carousel({interval: 7000})

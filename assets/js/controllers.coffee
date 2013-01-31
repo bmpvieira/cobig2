@@ -12,12 +12,13 @@ angular
   .controller('ContentCtrl', ['$scope', '$routeParams', 'Content', 'API'
     ($scope, $routeParams, Content, API) ->
       if $scope.views?
-        if $routeParams.path in $scope.views_keys
+        if $routeParams.path in $scope.views_keys # view has specific template
           if 'thumbnails' is $scope.views[$routeParams.path]
-            $scope.templateUrl = 'partials/members'
+            $scope.templateUrl = 'templates/members'
             $scope.getDetails = (id, callback) ->
               if id?
-                API.get {path: 'members', subpath: id}, (results) =>
+                API.get {service: 'linkedin', object: 'members', param: id}, (results) =>
+                  console.log results
                   details = {}
                   details.fields = [
                     title: 'Summary', body: results.data.summary
@@ -30,17 +31,22 @@ angular
                     icon: 'twitter', url: "//twitter.com/#{results.data.primaryTwitterAccount.providerAccountName}"
                   ]
                   callback details
-            API.get {path: 'members'}, (members) ->
+            API.get {service: 'linkedin', object: 'members'}, (members) ->
               $scope.thumbnails = members.data
               $scope.path = 'members'
               $scope.$emit 'controllerDone'
           else if 'papers' is $scope.views[$routeParams.path]
-            $scope.templateUrl = 'partials/papers'
-            API.get {path: 'papers'}, (papers) ->
+            $scope.templateUrl = 'templates/papers'
+            API.get {service: 'mendeley', object: 'papers'}, (papers) ->
               $scope.papers = papers.documents
               $scope.$emit 'controllerDone'
-        else
-          $scope.templateUrl = 'partials/markdown'
+        else if 'photos' is $routeParams.path
+          $scope.templateUrl = 'templates/photos'
+          API.get {service: 'facebook', object: 'photos', param: '222282514468462'}, (photos) ->
+            $scope.photos = photos.data
+            $scope.$emit 'controllerDone'
+        else # defaults view to markdown
+          $scope.templateUrl = 'templates/markdown'
           # Get content from markdown files
           $routeParams.path = 'home' if $routeParams.path is ''
           Content.get {file: $routeParams.path, ext: 'md'}, (content) ->

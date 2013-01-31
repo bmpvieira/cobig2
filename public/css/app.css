@@ -31,7 +31,7 @@ img.broken{-webkit-transform:rotate(7deg);-moz-transform:rotate(7deg);-o-transfo
 #logotext .serif{font-family:"Droid Serif",Constantia,"Lucida Bright",Lucidabright,"Lucida Serif",Lucida,"DejaVu Serif","Bitstream Vera Serif","Liberation Serif",Georgia,serif}
 #logotext .smalltext{font-size:.7em}
 #logotext .bigtext{font-size:1.2em;font-weight:400}
-.search{padding-top:5px;padding-left:20px}
+.search{padding-top:5px;padding-left:20px;padding-right:1%}
 .navbar-form .input-append .btn,.navbar-form .input-prepend .btn{margin-top:0}
 .navbar-form .btn,.navbar-form .btn-group .appendedbtn{padding:4px}
 .navbar-fixed-top .container,.navbar-fixed-bottom .container{width:auto;padding-left:10px;margin-bottom:0}

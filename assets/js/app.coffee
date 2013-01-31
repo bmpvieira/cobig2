@@ -10,7 +10,7 @@ angular
           template: '<div ng-include="templateUrl">Loading...</div>'
         )
 
-      #$routeProvider.otherwise redirectTo: '/home'
+      $routeProvider.otherwise redirectTo: '/404'
       $locationProvider.html5Mode true
   ])
   .run(['$rootScope', '$route', 'Menu', 'Views'

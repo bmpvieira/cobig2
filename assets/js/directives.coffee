@@ -63,8 +63,8 @@ angular
           scope.$watch 'lastCenter', updateCenter
           window.bind 'resize', updateCenter
   ])
-  .directive('appThumbnail', ['API',
-    appThumbnailFactory = (API) ->
+  .directive('appThumbnail',
+    appThumbnailFactory = ->
       appThumbnailDefinition =
         templateUrl: 'partials/thumbnails'
         restrict: 'E'
@@ -90,4 +90,4 @@ angular
             scope.$apply()
             element.removeClass if detailsShow then 'details-hidden' else 'details-shown'
             element.addClass if detailsShow then 'details-shown' else 'details-hidden'
-  ])
+  )

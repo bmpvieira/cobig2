@@ -8,7 +8,7 @@ angular
   .factory('API', ['$resource',
     ($resource, Globals) ->
       # Get data from server REST api
-      $resource 'api/:path/:subpath', {}
+      $resource 'api/:service/:object/:param', {}
   ])
   .factory('Menu', ['$rootScope', 'Content'
     ($scope, Content) ->

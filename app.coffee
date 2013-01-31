@@ -30,15 +30,18 @@ app.configure "production", ->
 
 # Routes
 app.get '/', routes.index
+app.get '/templates/:name', routes.templates
 app.get '/partials/:name', routes.partials
 
 # JSON API
-app.get '/api/name', api.name
-app.get '/api/members', api.members
-app.get '/api/members/:id', api.members
-app.get '/api/authenticate', api.authenticate
-app.get '/api/authenticate/:id', api.authenticate
-app.get '/api/papers', api.papers
+app.get '/api/linkedin/members', api.linkedin.members
+app.get '/api/linkedin/members/:user', api.linkedin.members
+app.get '/api/linkedin/authenticate/request/:user', api.authenticate
+app.get '/api/linkedin/authenticate/get', api.authenticate
+app.get '/api/facebook/authenticate/request/:user', api.facebook.request
+app.get '/api/facebook/authenticate/get', api.facebook.get
+app.get '/api/facebook/photos/:album', api.facebook.photos
+app.get '/api/mendeley/papers', api.mendeley.papers
 
 # redirect all others to the index (HTML5 history)
 app.get '*', routes.index
