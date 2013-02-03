@@ -1,6 +1,6 @@
 .container-fluid
   .row-fluid
-    .span6.content.gradient(app-center)
+    .content(ng-class='{"app-hide": !papers, "app-show": papers}')
       input.input-medium.search-query.pull-right(type='text', ng-model='search', placeholder='Search in all fields...')
       br
       h1 Papers

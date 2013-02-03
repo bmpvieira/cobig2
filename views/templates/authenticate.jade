@@ -1,0 +1,12 @@
+.container-fluid
+  .row-fluid
+    .content(ng-class='{"app-hide": !thumbnails, "app-show": thumbnails}')
+      h2.text-error Autenticate Users
+      ul.span12
+        app-thumbnail(
+          ng-repeat='user in users'
+          id='{{user.id}}'
+          title='{{user.firstName}} {{user.lastName}}'
+          body='{{user.headline}}'
+          picture='{{user.pictureUrl}}'
+          get-details='getDetails(id, callback)')

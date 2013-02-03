@@ -33,7 +33,6 @@ angular
                   callback details
             API.get {service: 'linkedin', object: 'members'}, (members) ->
               $scope.thumbnails = members.data
-              $scope.path = 'members'
               $scope.$emit 'controllerDone'
           else if 'papers' is $scope.views[$routeParams.path]
             $scope.templateUrl = 'templates/papers'
@@ -44,6 +43,22 @@ angular
           $scope.templateUrl = 'templates/photos'
           API.get {service: 'facebook', object: 'photos', param: '222282514468462'}, (photos) ->
             $scope.photos = photos.data
+            $scope.$emit 'controllerDone'
+        else if 'authenticate' is $routeParams.path
+          $scope.templateUrl = 'templates/authenticate'
+          $scope.getDetails = (id, callback) ->
+            console.log id
+            API.get {service: 'facebook', object: 'authenticate\\/request', param: id}, (data) ->
+              console.log data
+              details = {}
+              details.links = [
+                icon: 'linkedin', url: "/authenticate/facebook/#{id}"
+              ,
+                icon: 'facebook', url: "api/facebook/authenticate/request/#{id}"
+              ]
+              callback details
+          API.get {service: 'linkedin', object: 'members'}, (members) ->
+            $scope.users = members.data
             $scope.$emit 'controllerDone'
         else # defaults view to markdown
           $scope.templateUrl = 'templates/markdown'

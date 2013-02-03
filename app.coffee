@@ -36,10 +36,10 @@ app.get '/partials/:name', routes.partials
 # JSON API
 app.get '/api/linkedin/members', api.linkedin.members
 app.get '/api/linkedin/members/:user', api.linkedin.members
-app.get '/api/linkedin/authenticate/request/:user', api.authenticate
-app.get '/api/linkedin/authenticate/get', api.authenticate
-app.get '/api/facebook/authenticate/request/:user', api.facebook.request
-app.get '/api/facebook/authenticate/get', api.facebook.get
+app.get '/api/linkedin/authenticate/request/:user', api.linkedin.authenticate.request
+app.get '/api/linkedin/authenticate/get', api.linkedin.authenticate.get
+app.get '/api/facebook/authenticate/request/:user', api.facebook.authenticate.request
+app.get '/api/facebook/authenticate/get', api.facebook.authenticate.get
 app.get '/api/facebook/photos/:album', api.facebook.photos
 app.get '/api/mendeley/papers', api.mendeley.papers
 

@@ -1,6 +1,6 @@
 .container-fluid
   .row-fluid
-    .content.gradient(app-center)
+    .content(ng-class='{"app-hide": !photos, "app-show": photos}')
       #carousel.carousel.slide
         .carousel-inner
           .item(ng-repeat='photo in photos', class='{{$first && "active" || ""}}')

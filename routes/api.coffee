@@ -87,8 +87,8 @@ module.exports = exports =
       request: (req, res) ->
         crypto.randomBytes 48, (ex, buf) ->
           state = buf.toString 'hex'
-          redis.set "state:#{state}", req.params.id
-          res.redirect "https://www.facebook.com/dialog/oauth" +
+          redis.set "state:#{state}", req.params.user
+          res.json "https://www.facebook.com/dialog/oauth" +
             "?client_id=#{FACEBOOK_APP_ID}" +
             "&redirect_uri=#{HOST}#{FACEBOOK_REDIRECT}" +
             "&state=#{state}" +

@@ -1,5 +1,5 @@
-li.thumbnail.details-hidden(class='{{detailsShow && "span12" || "span4"}}')
-  button(class='{{detailsShow && "span4" || "span12"}}')
+li.thumbnail(ng-class='{span12: detailsShow, span4: !detailsShow}')
+  button(ng-class='{span4: detailsShow, span12: !detailsShow}')
     .loading
       img.img-polaroid.fadein(
         onload='this.style.opacity="1";'
@@ -8,7 +8,7 @@ li.thumbnail.details-hidden(class='{{detailsShow && "span12" || "span4"}}')
         alt='{{title}}')
     h5 {{title}}
     p {{body}}
-  .details-show.span8(ng-cloak, ng-show='detailsShow')
+  .span8(ng-cloak, ng-class='{"app-show": detailsShow, "app-hide": !detailsShow}')
     .details(ng-cloak, ng-show='details')
       dl(ng-repeat='field in details.fields')
         dt {{field.title}}

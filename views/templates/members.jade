@@ -1,8 +1,8 @@
 .container-fluid
   .row-fluid
-    .content.gradient(app-center)
+    .content(ng-class='{"app-hide": !thumbnails, "app-show": thumbnails}')
       h2 Members
-      ul.span12
+      ul.thumbnails.span12
         app-thumbnail(
           ng-repeat='thumbnail in thumbnails'
           id='{{thumbnail.id}}'

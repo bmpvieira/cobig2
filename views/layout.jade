@@ -13,8 +13,10 @@ html(lang='en', ng-app="app")
     block menu
       include partials/menu
 
-    block content
-      div(ng-view)
+    .center-outer
+      .center-inner
+        block content
+          div(ng-view)
 
     block js
       != js('base64') //- base64 codec

@@ -1,16 +1,20 @@
 # Declare app level module which depends on filters, and services
 angular
   .module('app', ['ngSanitize', 'appGlobals', 'appServices', 'appDirectives'])
-  .config(['$routeProvider', '$locationProvider'
+  .config(['$routeProvider', '$locationProvider',
     ($routeProvider, $locationProvider) ->
 
       $routeProvider
+        .when('/authenticate/facebook/:user'
+          controller: 'AuthenticationCtrl'
+          template: '<div></div>'
+        )
         .when('/:path',
           controller: 'ContentCtrl'
           template: '<div ng-include="templateUrl">Loading...</div>'
         )
 
-      $routeProvider.otherwise redirectTo: '/404'
+      #$routeProvider.otherwise redirectTo: '/404'
       $locationProvider.html5Mode true
   ])
   .run(['$rootScope', '$route', 'Menu', 'Views'

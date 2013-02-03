@@ -1,4 +1,4 @@
 .container-fluid
   .row-fluid
-    .content.gradient(app-center='content')
+    .content(ng-class='{"app-hide": !content, "app-show": content}')
       span(ng-cloak, ng-bind-html-unsafe='content')
