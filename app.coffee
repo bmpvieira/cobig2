@@ -21,6 +21,9 @@ app.configure ->
   app.use express.methodOverride()
   app.use express.static "#{__dirname}/public"
   app.use app.router
+  # Session
+  app.use express.cookieParser 'one secret' # should be above session
+  app.use express.session secret: 'two secrets'
 
 app.configure 'development', ->
   app.use express.errorHandler
