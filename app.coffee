@@ -7,7 +7,7 @@ routes = require './routes'
 api = require './routes/api'
 config = require './config.yaml'
 
-privateAuth = require './modules/privateAuth'
+#privateAuth = require './modules/privateAuth'
 
 app = module.exports = express()
 
@@ -32,14 +32,14 @@ app.configure 'production', ->
 
 app.configure 'staging', ->
   privateAuth = (req, res, next) ->
-  if req.cookies.showmepreview
-    next()
-  else
-    if req.param('showmepreview') is 'please'
-      res.cookie 'showmepreview', '1', maxAge: 3600000
+    if req.cookies.showmepreview
       next()
     else
-      res.redirect 'http://cobig2.com'
+      if req.param('showmepreview') is 'please'
+        res.cookie 'showmepreview', '1', maxAge: 3600000
+        next()
+      else
+        res.redirect 'http://cobig2.com'
   app.use privateAuth
 
 # Routes
