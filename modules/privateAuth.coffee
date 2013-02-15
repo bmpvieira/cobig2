@@ -1,3 +1,6 @@
+yaml = require 'js-yaml'
+config = require '../config.yaml'
+
 module.exports = exports = privateAuth = (req, res, next) ->
   if req.cookies.showmepreview
     next()
@@ -6,4 +9,4 @@ module.exports = exports = privateAuth = (req, res, next) ->
       res.cookie 'showmepreview', '1', maxAge: 3600000
       next()
     else
-      res.redirect 'http://cobig2.fc.ul.pt'
+      res.redirect "//#{config.hosts.production}"

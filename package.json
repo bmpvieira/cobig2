@@ -19,6 +19,7 @@
     "request": "~2.12.0",
     "redis": "~0.8.2",
     "hiredis": "~0.1.14",
-    "oauth": "*"
+    "oauth": "*",
+    "connect-redis": "~1.4.5"
   }
 }

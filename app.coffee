@@ -3,6 +3,8 @@ express = require 'express'
 yaml = require 'js-yaml'
 assets = require 'connect-assets'
 
+RedisStore = require("connect-redis")(express)
+
 routes = require './routes'
 api = require './routes/api'
 config = require './config.yaml'
@@ -14,21 +16,21 @@ app = module.exports = express()
 # Configuration
 app.locals config
 app.configure ->
-  app.use assets()
   app.set 'views', "#{__dirname}/views"
   app.set 'view engine', 'jade'
   app.use express.bodyParser()
   app.use express.methodOverride()
+  # Sessions
+  app.use express.cookieParser()
+  app.use express.session store: new RedisStore, secret: 'secret trolololo'
+  # Assets
+  app.use assets()
   app.use express.static "#{__dirname}/public"
-  app.use app.router
-  # Session
-  app.use express.cookieParser 'one secret' # should be above session
-  app.use express.session secret: 'two secrets'
+  # Router
+  #app.use app.router # this breaks privateAuth for staging
 
 app.configure 'development', ->
-  app.use express.errorHandler
-    dumpExceptions: true
-    showStack: true
+  app.use express.errorHandler dumpExceptions: true, showStack: true
 
 app.configure 'production', ->
   app.use express.errorHandler()
