@@ -7,6 +7,8 @@ routes = require './routes'
 api = require './routes/api'
 config = require './config.yaml'
 
+privateAuth = require './modules/privateAuth'
+
 app = module.exports = express()
 
 # Configuration
@@ -20,13 +22,16 @@ app.configure ->
   app.use express.static "#{__dirname}/public"
   app.use app.router
 
-app.configure "development", ->
+app.configure 'development', ->
   app.use express.errorHandler
     dumpExceptions: true
     showStack: true
 
-app.configure "production", ->
+app.configure 'production', ->
   app.use express.errorHandler()
+
+app.configure 'staging', ->
+  app.use privateAuth
 
 # Routes
 app.get '/', routes.index
@@ -47,5 +52,6 @@ app.get '/api/mendeley/papers', api.mendeley.papers
 app.get '*', routes.index
 
 # Start server
-app.listen 3000, ->
+port = process.argv[2] or process.env.PORT or 3000;
+app.listen port, ->
   console.log "Express server listening on port %d in %s mode", @address().port, app.settings.env
