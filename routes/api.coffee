@@ -2,16 +2,16 @@
 request = require 'request'
 crypto = require 'crypto'
 querystring = require 'querystring'
-redis = require 'redis'
+redismod = require 'redis'
 url = require 'url'
 Linkedin = require '../modules/linkedin'
 
 if process.env.REDISTOGO_URL
   rtg = url.parse(process.env.REDISTOGO_URL)
-  redis.createClient(rtg.port, rtg.hostname)
+  redis = redismod.createClient(rtg.port, rtg.hostname)
   redis.auth rtg.auth.split(':')[1]
 else
-  redis.createClient()
+  redis = redismod.createClient()
 
 redis.on 'error', (err) ->
     console.log "Error: #{err}"
