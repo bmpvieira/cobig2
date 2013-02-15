@@ -13,4 +13,4 @@ li.thumbnail(ng-class='{span12: detailsShow, span4: !detailsShow}')
       dl(ng-repeat='field in details.fields')
         dt {{field.title}}
         dd {{field.body}}
-      a.icon(ng-repeat='link in details.links', class='icon-{{link.icon}}', ng-href='{{link.url}}')
+      a.icon(ng-repeat='link in details.links', class='icon-{{link.icon}}', ng-href='{{link.url}}', target='_blank')

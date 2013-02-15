@@ -33,6 +33,7 @@ angular
                   callback details
             API.get {service: 'linkedin', object: 'members'}, (members) ->
               $scope.thumbnails = members.data
+              console.log $scope.thumbnails
               $scope.$emit 'controllerDone'
           else if 'papers' is $scope.views[$routeParams.path]
             $scope.templateUrl = 'templates/papers'
@@ -52,7 +53,7 @@ angular
               console.log data
               details = {}
               details.links = [
-                icon: 'linkedin', url: "/authenticate/facebook/#{id}"
+                icon: 'linkedin', url: "api/linkedin/authenticate/request/#{id}"
               ,
                 icon: 'facebook', url: "api/facebook/authenticate/request/#{id}"
               ]

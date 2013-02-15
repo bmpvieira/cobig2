@@ -1,15 +1,16 @@
 # LinkedIn API authenticated access with oauth
 OAuth = require('oauth').OAuth
+HOST = process.env.HOST
 module.exports = exports =
   class Linkedin
     constructor: (@_apiKey, @_apiSecret, @_userToken, @_userKey) ->
       @consumer = new OAuth(
-        'https://api.linkedin.com/uas/oauth/requestToken?scope=r_fullprofile+r_emailaddress+r_contactinfo'
+        "https://api.linkedin.com/uas/oauth/requestToken?scope=r_fullprofile+r_emailaddress+r_contactinfo"
         'https://api.linkedin.com/uas/oauth/accessToken'
         @_apiKey
         @_apiSecret
         '1.0'
-        null
+        "#{HOST}/api/linkedin/authenticate/get"
         'HMAC-SHA1')
     get: (url, next) ->
       @consumer.getProtectedResource url, 'GET', @_userToken, @_userKey, (err, data) ->

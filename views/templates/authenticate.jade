@@ -1,8 +1,8 @@
 .container-fluid
   .row-fluid
-    .content(ng-class='{"app-hide": !thumbnails, "app-show": thumbnails}')
+    .content(ng-class='{"app-hide": !users, "app-show": users}')
       h2.text-error Autenticate Users
-      ul.span12
+      ul.thumbnails.span12
         app-thumbnail(
           ng-repeat='user in users'
           id='{{user.id}}'
