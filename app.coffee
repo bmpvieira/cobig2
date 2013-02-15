@@ -33,6 +33,18 @@ app.configure 'production', ->
 app.configure 'staging', ->
   app.use privateAuth
 
+# Allow Cross Domain (TODO: should just move github to server-side and serve json)
+app.all "*", (req, res, next) ->
+  res.header "Access-Control-Allow-Origin", "*"
+  res.header "Access-Control-Allow-Headers", "X-Requested-With"
+  res.header "Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS"
+  res.header "X-Powered-By", " 3.2.1"
+  res.header "Content-Type", "application/json;charset=utf-8"
+  if req.method is "OPTIONS"
+    res.send 200
+  else
+    next()
+
 # Routes
 app.get '/', routes.index
 app.get '/templates/:name', routes.templates
