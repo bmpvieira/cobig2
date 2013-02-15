@@ -30,7 +30,7 @@ app.configure 'development', ->
 app.configure 'production', ->
   app.use express.errorHandler()
 
-app.configure 'staging', ->
+if 'staging' is app.get 'env'
   privateAuth = (req, res, next) ->
     if req.cookies.showmepreview
       next()
@@ -39,7 +39,7 @@ app.configure 'staging', ->
         res.cookie 'showmepreview', '1', maxAge: 3600000
         next()
       else
-        res.redirect 'http://cobig2.com'
+        res.redirect 'http://cobig2.fc.ul.pt'
   app.use privateAuth
 
 # Routes
@@ -58,7 +58,7 @@ app.get '/api/facebook/photos/:album', api.facebook.photos
 app.get '/api/mendeley/papers', api.mendeley.papers
 
 # redirect all others to the index (HTML5 history)
-app.get '*', routes.index
+#app.get '*', routes.index
 
 # Start server
 port = process.argv[2] or process.env.PORT or 3000;
