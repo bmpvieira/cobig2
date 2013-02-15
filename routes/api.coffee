@@ -67,6 +67,7 @@ module.exports = exports =
       if req.params.user?
         redis.hgetall "linkedin:#{req.params.user}", (err, data) ->
           return res.json err if err
+          return res.json 'autentication needed' if not data?
           auth_linkedin = new Linkedin(
             LINKEDIN_API_KEY
             LINKEDIN_API_SECRET
