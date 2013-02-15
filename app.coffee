@@ -31,11 +31,7 @@ app.configure 'production', ->
   app.use express.errorHandler()
 
 app.configure 'staging', ->
-  app.use privateAuth
-
-if process.env.NODE_ENV is 'staging'
-  console.log 'staging'
-  app.use privateAuth
+  app.use privateAuth()
 
 # Routes
 app.get '/', routes.index
