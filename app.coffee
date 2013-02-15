@@ -52,7 +52,7 @@ app.get '/api/facebook/photos/:album', api.facebook.photos
 app.get '/api/mendeley/papers', api.mendeley.papers
 
 # redirect all others to the index (HTML5 history)
-app.get '*', routes.index
+app.get '*', routes.index unless app.get 'env' is 'staging'
 
 # Start server
 port = process.argv[2] or process.env.PORT or 3000;
