@@ -31,7 +31,16 @@ app.configure 'production', ->
   app.use express.errorHandler()
 
 app.configure 'staging', ->
-  app.use privateAuth()
+  privateAuth = (req, res, next) ->
+  if req.cookies.showmepreview
+    next()
+  else
+    if req.param('showmepreview') is 'please'
+      res.cookie 'showmepreview', '1', maxAge: 3600000
+      next()
+    else
+      res.redirect 'http://cobig2.com'
+  app.use privateAuth
 
 # Routes
 app.get '/', routes.index
