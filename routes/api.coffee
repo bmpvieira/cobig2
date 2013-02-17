@@ -13,8 +13,7 @@ if process.env.REDISTOGO_URL
 else
   redis = redismod.createClient()
 
-redis.on 'error', (err) ->
-    console.log "Error: #{err}"
+redis.on 'error', (err) -> console.error "Error: #{err}"
 
 MENDELEY_CONSUMER_KEY = process.env.MENDELEY_CONSUMER_KEY
 MENDELEY_GROUP = process.env.MENDELEY_GROUP
@@ -64,7 +63,7 @@ module.exports = exports =
               (err) ->
                 return res.json err if err
                 res.json 'success'
-    members: (req, res) ->
+    members: (req, res, next) ->
       if req.params.user?
         authUser = req.params.user
         url = "http://api.linkedin.com/v1/people/id=#{req.params.user}" +
@@ -76,7 +75,7 @@ module.exports = exports =
           ":(people:(id,first-name,last-name,picture-url,headline),num-results)" +
           "?company-name=#{LINKEDIN_COMPANY}&count=25&format=json"
       redis.hgetall "linkedin:#{authUser}", (err, data) ->
-        return res.json err if err
+        return next err if err
         return res.json 'autentication needed' if not data?
         auth_linkedin = new Linkedin(
           LINKEDIN_API_KEY
@@ -91,19 +90,19 @@ module.exports = exports =
               # this could be default if app tokens wheren't invalidated
               # so often. TODO: Find why those invalidations happen
               linkedin.get url, (err, data) ->
-                return res.json err if err
+                return next err if err
                 try
                   JSONdata = JSON.parse data
                 catch error
-                  res.json error
+                  next error
                 res.json data: JSONdata.people.values
             else
-              return res.json err if err
+              return next err if err
           else
             try
               JSONdata = JSON.parse data
             catch error
-              res.json error
+              next error
             if req.params.user?
               res.json data: JSONdata
             else

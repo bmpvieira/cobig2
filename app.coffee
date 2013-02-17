@@ -54,6 +54,11 @@ app.get '/api/mendeley/papers', api.mendeley.papers
 # redirect all others to the index (HTML5 history)
 app.get '*', routes.index unless app.get 'env' is 'staging'
 
+# error handler
+app.use (err, req, res, next) ->
+  console.error err
+  res.json err
+
 # Start server
 port = process.argv[2] or process.env.PORT or 3000;
 app.listen port, ->

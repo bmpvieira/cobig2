@@ -32,9 +32,7 @@ angular
                   ]
                   callback details
             API.get {service: 'linkedin', object: 'members'}, (members) ->
-              console.log members.data
               $scope.thumbnails = members.data
-              console.log $scope.thumbnails
               $scope.$emit 'controllerDone'
           else if 'papers' is $scope.views[$routeParams.path]
             $scope.templateUrl = 'templates/papers'
