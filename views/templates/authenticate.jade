@@ -4,7 +4,7 @@
       h2.text-error Autenticate Users
       ul.thumbnails.span12
         app-thumbnail(
-          ng-repeat='user in users'
+          ng-repeat='user in users | orderBy:"lastName"'
           id='{{user.id}}'
           title='{{user.firstName}} {{user.lastName}}'
           body='{{user.headline}}'

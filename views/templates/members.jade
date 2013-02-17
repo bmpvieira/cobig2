@@ -4,7 +4,7 @@
       h2 Members
       ul.thumbnails.span12
         app-thumbnail(
-          ng-repeat='thumbnail in thumbnails'
+          ng-repeat='thumbnail in thumbnails | orderBy:"lastName"'
           id='{{thumbnail.id}}'
           title='{{thumbnail.firstName}} {{thumbnail.lastName}}'
           body='{{thumbnail.headline}}'

@@ -18,7 +18,6 @@ angular
             $scope.getDetails = (id, callback) ->
               if id?
                 API.get {service: 'linkedin', object: 'members', param: id}, (results) =>
-                  console.log results
                   details = {}
                   details.fields = [
                     title: 'Summary', body: results.data.summary
