@@ -27,6 +27,7 @@ HOST = process.env.HOST
 LINKEDIN_API_KEY = process.env.LINKEDIN_API_KEY
 LINKEDIN_API_SECRET =process.env.LINKEDIN_API_SECRET
 LINKEDIN_COMPANY = process.env.LINKEDIN_COMPANY
+LINKEDIN_FALLBACK_USER = process.env.LINKEDIN_FALLBACK_USER
 
 linkedin = new Linkedin(
   LINKEDIN_API_KEY
@@ -65,37 +66,48 @@ module.exports = exports =
                 res.json 'success'
     members: (req, res) ->
       if req.params.user?
-        redis.hgetall "linkedin:#{req.params.user}", (err, data) ->
-          return res.json err if err
-          return res.json 'autentication needed' if not data?
-          auth_linkedin = new Linkedin(
-            LINKEDIN_API_KEY
-            LINKEDIN_API_SECRET
-            data.token
-            data.secret
-          )
-          auth_linkedin.get "http://api.linkedin.com/v1/people/id=#{req.params.user}" +
-            ":(email-address,summary,public-profile-url,primary-twitter-account)" +
-            "?format=json", (err, data) ->
-              return res.json err if err
-              try
-                res.json data: JSON.parse data
-              catch error
-                res.json error
-          # using app token
-          # linkedin.get "http://api.linkedin.com/v1/people/id=#{req.params.user}" + 
-          #   ":(email-address,summary,public-profile-url,primary-twitter-account)" + 
-          #   "?format=json"
-          #   (err, data) ->
-          #     return res.json err if err
-          #     res.json data: JSON.parse data
+        authUser = req.params.user
+        url = "http://api.linkedin.com/v1/people/id=#{req.params.user}" +
+          ":(email-address,summary,public-profile-url,primary-twitter-account)" +
+          "?format=json"
       else
-        linkedin.get "http://api.linkedin.com/v1/people-search:(people:(id,first-name,last-name,picture-url,headline),num-results)?company-name=#{LINKEDIN_COMPANY}&count=25&format=json", (err, data) =>
-          return res.json err if err
-          try
-            res.json data: JSON.parse(data).people.values
-          catch error
-            res.json error
+        authUser = LINKEDIN_FALLBACK_USER
+        url = "http://api.linkedin.com/v1/people-search" +
+          ":(people:(id,first-name,last-name,picture-url,headline),num-results)" +
+          "?company-name=#{LINKEDIN_COMPANY}&count=25&format=json"
+      redis.hgetall "linkedin:#{authUser}", (err, data) ->
+        return res.json err if err
+        return res.json 'autentication needed' if not data?
+        auth_linkedin = new Linkedin(
+          LINKEDIN_API_KEY
+          LINKEDIN_API_SECRET
+          data.token
+          data.secret
+        )
+        auth_linkedin.get url, (err, data) =>
+          if err?
+            if err.statusCode is 401 and not req.params.user?
+              # if fallback_user auth failed, try with linkedin app tokens
+              # this could be default if app tokens wheren't invalidated
+              # so often. TODO: Find why those invalidations happen
+              linkedin.get url, (err, data) ->
+                return res.json err if err
+                try
+                  JSONdata = JSON.parse data
+                catch error
+                  res.json error
+                res.json data: JSONdata.people.values
+            else
+              return res.json err if err
+          else
+            try
+              JSONdata = JSON.parse data
+            catch error
+              res.json error
+            if req.params.user?
+              res.json data: JSONdata
+            else
+              res.json data: JSONdata.people.values
   mendeley:
     papers: (req, res) ->
       req.pipe(request("http://api.mendeley.com/oapi/documents/groups/#{MENDELEY_GROUP}/docs/?details=true&consumer_key=#{MENDELEY_CONSUMER_KEY}")).pipe(res)

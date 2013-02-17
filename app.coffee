@@ -26,8 +26,6 @@ app.configure ->
   # Assets
   app.use assets()
   app.use express.static "#{__dirname}/public"
-  # Router
-  #app.use app.router # this breaks privateAuth for staging
 
 app.configure 'development', ->
   app.use express.errorHandler dumpExceptions: true, showStack: true

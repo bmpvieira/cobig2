@@ -5,7 +5,7 @@ module.exports = exports =
   class Linkedin
     constructor: (@_apiKey, @_apiSecret, @_userToken, @_userKey) ->
       @consumer = new OAuth(
-        "https://api.linkedin.com/uas/oauth/requestToken?scope=r_fullprofile+r_emailaddress+r_contactinfo"
+        "https://api.linkedin.com/uas/oauth/requestToken?scope=r_fullprofile+r_emailaddress+r_contactinfo+r_network"
         'https://api.linkedin.com/uas/oauth/accessToken'
         @_apiKey
         @_apiSecret
