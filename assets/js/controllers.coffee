@@ -43,7 +43,7 @@ angular
               $scope.$emit 'controllerDone'
         else if 'photos' is $routeParams.path
           $scope.templateUrl = 'templates/photos'
-          API.get {service: 'facebook', object: 'photos', param: '222282514468462'}, (photos) ->
+          API.get {service: 'facebook', object: 'photos', param: '10200169778121606'}, (photos) ->
             $scope.photos = photos.data
             $scope.$emit 'controllerDone'
         else if 'authenticate' is $routeParams.path

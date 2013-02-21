@@ -112,7 +112,7 @@ module.exports = exports =
       req.pipe(request("http://api.mendeley.com/oapi/documents/groups/#{MENDELEY_GROUP}/docs/?details=true&consumer_key=#{MENDELEY_CONSUMER_KEY}")).pipe(res)
   facebook:
     photos: (req, res) ->
-      token = 'AAACORBwmBv0BAP79ncXAc4BxZAf3BrtGe2U4C1jmdLWZAl7WDmV64JxzmQDPbobufSjeTYiZASdR9kqYd9wNPXKHdEprVqSsyTPC0PutgZDZD'
+      token = 'AAACEdEose0cBABKn8sCc55J1gV9DyU6ZCyetVaxdBTN7C3Lh5BopWYMDO8RKXtMdY9NXa5whHjwTIbZB66VPozrOt502WFBqN8CL8E4I3U3kUZBedN9'
       req.pipe(request("https://graph.facebook.com/#{req.params.album}/photos?access_token=#{token}")).pipe(res)
     authenticate:
       request: (req, res) ->
