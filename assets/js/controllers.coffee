@@ -22,13 +22,16 @@ angular
                   details.fields = [
                     title: 'Summary', body: results.data.summary
                   ]
-                  details.links = [
-                    icon: 'envelope-alt', url: "mailto:#{results.data.emailAddress}"
-                  ,
-                    icon: 'linkedin', url: "#{results.data.publicProfileUrl}"
-                  ,
-                    icon: 'twitter', url: "//twitter.com/#{results.data.primaryTwitterAccount.providerAccountName}"
-                  ]
+                  details.links = []
+                  if results.data.emailAddress?
+                    email = "mailto:#{results.data.emailAddress}"
+                    details.links.push icon: 'envelope-alt', url: email
+                  if results.data.publicProfileUrl?
+                    linkedin = "#{results.data.publicProfileUrl}"
+                    details.links.push icon: 'linkedin', url: linkedin
+                  if results.data.primaryTwitterAccount?.providerAccountName?
+                    twitter = "//twitter.com/#{results.data.primaryTwitterAccount.providerAccountName}"
+                    details.links.push icon: 'twitter', url: twitter
                   callback details
             API.get {service: 'linkedin', object: 'members'}, (members) ->
               $scope.thumbnails = members.data
