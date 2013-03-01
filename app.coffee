@@ -9,7 +9,7 @@ routes = require './routes'
 api = require './routes/api'
 config = require './config.yaml'
 
-privateAuth = require './modules/privateAuth'
+basicAuth = require './modules/basicAuth'
 
 app = module.exports = express()
 
@@ -26,6 +26,7 @@ app.configure ->
   # Assets
   app.use assets()
   app.use express.static "#{__dirname}/public"
+  app.locals.GANALYTICS = process.env.GANALYTICS
 
 app.configure 'development', ->
   app.use express.errorHandler dumpExceptions: true, showStack: true
@@ -34,7 +35,7 @@ app.configure 'production', ->
   app.use express.errorHandler()
 
 app.configure 'staging', ->
-  # app.use privateAuth
+  app.use basicAuth
 
 # Routes
 app.get '/', routes.index

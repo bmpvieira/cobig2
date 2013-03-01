@@ -11,3 +11,4 @@ set -x FACEBOOK_APP_SECRET xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 set -x FACEBOOK_REDIRECT /api/facebook/authenticate/get
 set -x SESSION_SECRET 'trololololo' # for express session
 set -x HOST http://localhost:3000
+set -x GANALYTICS UA-xxxxxxxx-x # Google Analytics
