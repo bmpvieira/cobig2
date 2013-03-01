@@ -4,15 +4,9 @@ angular
   .config(['$routeProvider', '$locationProvider',
     ($routeProvider, $locationProvider) ->
 
-      $routeProvider
-        .when('/authenticate/facebook/:user'
-          controller: 'AuthenticationCtrl'
-          template: '<div></div>'
-        )
-        .when('/:path',
-          controller: 'ContentCtrl'
-          template: '<div ng-include="templateUrl">Loading...</div>'
-        )
+      $routeProvider.when '/:path'
+        controller: 'ContentCtrl'
+        template: '<div ng-include="templateUrl">Loading...</div>'
 
       #$routeProvider.otherwise redirectTo: '/404'
       $locationProvider.html5Mode true

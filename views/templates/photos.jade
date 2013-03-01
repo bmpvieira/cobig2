@@ -3,7 +3,7 @@
     .content(ng-class='{"app-hide": !photos, "app-show": photos}')
       #carousel.carousel.slide
         .carousel-inner
-          .item(ng-repeat='photo in photos', class='{{$first && "active" || ""}}')
+          .item(ng-repeat='photo in photos | orderBy: "updated_time"', class='{{$first && "active" || ""}}')
             img(ng-src='{{photo.images[3].source}}')
             .carousel-caption
               h4 {{photo.name}}

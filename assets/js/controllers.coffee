@@ -3,7 +3,7 @@ angular
   .module('app')
   .controller('AppCtrl', ['$rootScope', 'Content'
     ($scope, Content) ->
-      # Helper functions to filter menu items with dropdown
+      # Filters for menu items
       $scope.hasDropdown = (item) ->
         'undefined' isnt typeof item.dropdown ? true : false
       $scope.hasntDropdown = (item) ->
@@ -13,7 +13,9 @@ angular
     ($scope, $routeParams, Content, API) ->
       if $scope.views?
         if $routeParams.path in $scope.views_keys # view has specific template
-          if 'thumbnails' is $scope.views[$routeParams.path]
+          view = $scope.views[$routeParams.path]
+          # Thumbnails
+          if 'thumbnails' is view
             $scope.templateUrl = 'templates/members'
             $scope.getDetails = (id, callback) ->
               if id?
@@ -36,22 +38,27 @@ angular
             API.get {service: 'linkedin', object: 'members'}, (members) ->
               $scope.thumbnails = members.data
               $scope.$emit 'controllerDone'
-          else if 'papers' is $scope.views[$routeParams.path]
+
+          # Papers
+          else if 'papers' is view
             $scope.templateUrl = 'templates/papers'
             API.get {service: 'mendeley', object: 'papers'}, (papers) ->
               $scope.papers = papers.documents
               $scope.$emit 'controllerDone'
-        else if 'photos' is $routeParams.path
-          $scope.templateUrl = 'templates/photos'
-          API.get {service: 'facebook', object: 'photos', param: '10200169778121606'}, (photos) ->
-            $scope.photos = photos.data
-            $scope.$emit 'controllerDone'
+
+          # Photos
+          else if 'photos' is view
+            $scope.templateUrl = 'templates/photos'
+            album = $scope.args[$routeParams.path]
+            API.get {service: 'facebook', object: 'photos', param: album}, (photos) ->
+              $scope.photos = photos.data
+              $scope.$emit 'controllerDone'
+
+        # Authentication
         else if 'authenticate' is $routeParams.path
           $scope.templateUrl = 'templates/authenticate'
           $scope.getDetails = (id, callback) ->
-            console.log id
             API.get {service: 'facebook', object: 'authenticate\\/request', param: id}, (data) ->
-              console.log data
               details = {}
               details.links = [
                 icon: 'linkedin', url: "api/linkedin/authenticate/request/#{id}"
@@ -62,6 +69,8 @@ angular
           API.get {service: 'linkedin', object: 'members'}, (members) ->
             $scope.users = members.data
             $scope.$emit 'controllerDone'
+
+        # Content
         else # defaults view to markdown
           $scope.templateUrl = 'templates/markdown'
           # Get content from markdown files

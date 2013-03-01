@@ -22,7 +22,7 @@ app.configure ->
   app.use express.methodOverride()
   # Sessions
   app.use express.cookieParser()
-  app.use express.session store: new RedisStore, secret: 'secret trolololo'
+  app.use express.session store: new RedisStore, secret: process.env.SESSION_SECRET
   # Assets
   app.use assets()
   app.use express.static "#{__dirname}/public"
@@ -34,7 +34,7 @@ app.configure 'production', ->
   app.use express.errorHandler()
 
 app.configure 'staging', ->
-  app.use privateAuth
+  # app.use privateAuth
 
 # Routes
 app.get '/', routes.index

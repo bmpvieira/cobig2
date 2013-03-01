@@ -12,7 +12,7 @@ angular
   ])
   .factory('Menu', ['$rootScope', 'Content'
     ($scope, Content) ->
-      return ->
+      ->
         # Get navigation menu items from json file on Github
         Content.get {file: 'menu', ext: 'json'}, (menu) ->
           $scope.menu = JSON.parse(Base64.decode(menu.content)).menu
@@ -23,12 +23,17 @@ angular
       (menu) ->
         # Save items with special views for later use in routes
         views = {}
+        args = {}
         for item in menu
           if item.dropdown?
             for subitem in item.dropdown
+              path = subitem.href.split('/')[1]
               views[subitem.href.split('/')[1]] = subitem.view if subitem.view?
+              args[subitem.href.split('/')[1]] = subitem.args if subitem.args?
           views[item.href.split('/')[1]] = item.view if item.view?
+          args[item.href.split('/')[1]] = item.args if item.args?
         $scope.views = views
         $scope.views_keys = (key for key of views)
+        $scope.args = args
         $scope.$broadcast 'viewsLoaded'
   ])
