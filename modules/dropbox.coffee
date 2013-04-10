@@ -2,7 +2,7 @@
 OAuth = require('oauth').OAuth
 HOST = process.env.HOST
 module.exports = exports =
-  class Linkedin
+  class Dropbox
     constructor: (@_apiKey, @_apiSecret, @_userToken, @_userKey) ->
       @consumer = new OAuth(
         "https://api.dropbox.com/1/oauth/request_token"

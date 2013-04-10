@@ -76,6 +76,7 @@ angular
           # Get content from markdown files
           $routeParams.path = 'home' if $routeParams.path is ''
           Content.get {file: $routeParams.path, ext: 'md'}, (content) ->
-            $scope.content = marked Base64.decode content.content
+            # $scope.content = marked Base64.decode content.content # when from GitHub
+            $scope.content = marked content.data
             $scope.$emit 'controllerDone'
   ])

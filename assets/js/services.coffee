@@ -1,21 +1,35 @@
 angular
   .module('appServices', ['ngResource', 'appGlobals'])
-  .factory('Content', ['$resource', 'Globals'
+  .factory('ContentGithub', ['$resource', 'Globals'
     ($resource, Globals) ->
       # Get content from Github REST api
       $resource "#{Globals.urls.contents}/:file.:ext", {}
+  ])
+  .factory('Content', ['$http'
+    ($http) ->
+      get: (options, callback) ->
+        # Get content from Dropbox using server REST api
+        $http.get("/api/dropbox/files/#{options.file}.#{options.ext}").then callback
   ])
   .factory('API', ['$resource',
     ($resource, Globals) ->
       # Get data from server REST api
       $resource 'api/:service/:object/:param', {}
   ])
-  .factory('Menu', ['$rootScope', 'Content'
+  .factory('MenuFromGithub', ['$rootScope', 'Content'
     ($scope, Content) ->
       ->
         # Get navigation menu items from json file on Github
         Content.get {file: 'menu', ext: 'json'}, (menu) ->
           $scope.menu = JSON.parse(Base64.decode(menu.content)).menu
+          $scope.$broadcast 'menuLoaded'
+  ])
+  .factory('Menu', ['$rootScope', 'Content'
+    ($scope, Content) ->
+      ->
+        # Get navigation menu items from json file on Dropbox
+        Content.get {file: 'menu', ext: 'json'}, (res) ->
+          $scope.menu = res.data.menu
           $scope.$broadcast 'menuLoaded'
   ])
   .factory('Views', ['$rootScope'

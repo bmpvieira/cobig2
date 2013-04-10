@@ -67,7 +67,6 @@ module.exports = exports =
           requestSecret = data.secret
           dropbox.getauth requestToken, requestSecret, (err, token, secret, data) ->
             return res.json err if err
-            console.log data
             redis.hmset "dropbox:#{user}",
               'token', token
               'secret', secret
@@ -94,6 +93,34 @@ module.exports = exports =
           catch error
             next error
           res.json data: JSONdata
+    files: (req, res, next) ->
+      authUser = DROPBOX_FALLBACK_USER
+      url = "https://api-content.dropbox.com/1/files/sandbox/#{req.params.file}"
+      redis.hgetall "dropbox:#{authUser}", (err, data) ->
+        return next err if err
+        return res.json 'autentication needed' if not data?
+        auth_dropbox = new Dropbox(
+          DROPBOX_APP_KEY
+          DROPBOX_APP_SECRET
+          data.token
+          data.secret
+        )
+        auth_dropbox.get url, (err, data) =>
+          res.send data
+    media: (req, res, next) ->
+      authUser = DROPBOX_FALLBACK_USER
+      url = "https://api.dropbox.com/1/media/sandbox/media/#{req.params.file}"
+      redis.hgetall "dropbox:#{authUser}", (err, data) ->
+        return next err if err
+        return res.json 'autentication needed' if not data?
+        auth_dropbox = new Dropbox(
+          DROPBOX_APP_KEY
+          DROPBOX_APP_SECRET
+          data.token
+          data.secret
+        )
+        auth_dropbox.get url, (err, data) =>
+          request(JSON.parse(data).url).pipe(res)
   linkedin:
     authenticate: 
       request: (req, res) ->
