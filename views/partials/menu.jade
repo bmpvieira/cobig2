@@ -7,15 +7,14 @@
         img.logoimg(src="img/logo.png")
       .nav-collapse
         ul.nav
-          li.dropdown(ng-repeat='item in menu | filter: hasDropdown')
-            a.dropdown-toggle(data-toggle='dropdown', ng-href='javascript:')
+          li.dropdown(ng-repeat='item in menu', ng-switch='hasDropdown(item)')
+            a.dropdown-toggle(ng-switch-when='true', data-toggle='dropdown', ng-href='javascript:')
               | {{item.text}}
               b.caret
             ul.dropdown-menu(role="menu", aria-labelledby='{{item.text}}')
               li.item(ng-repeat='subitem in item.dropdown')
                 a.menulnk(ng-href='{{subitem.href}}', ng-class="{build: subitem.href == '/build'}") {{subitem.text}}
-          li.item(ng-repeat='item in menu | filter: hasntDropdown')
-            a.menulnk(ng-href='{{item.href}}', ng-class="{build: item.href == '/build'}") {{item.text}}
+            a.menulnk(ng-switch-when='false', ng-href='{{item.href}}', ng-class="{build: item.href == '/build'}") {{item.text}}
         form.search.item.navbar-search.pull-right(method='GET', action='https://www.google.com/search')
           input.search-query(type='text', name='as_q', placeholder='Search')
           input(type='hidden', name='as_sitesearch', value=hosts.production)

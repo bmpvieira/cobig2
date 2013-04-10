@@ -1,7 +1,7 @@
 .container-fluid
   .row-fluid
     .content(ng-class='{"app-hide": !thumbnails, "app-show": thumbnails}')
-      h2 Members
+      h2 Team
       ul.thumbnails.span12
         app-thumbnail(
           ng-repeat='thumbnail in thumbnails | orderBy:"lastName"'
