@@ -51,6 +51,9 @@ app.get '/api/facebook/authenticate/request/:user', api.facebook.authenticate.re
 app.get '/api/facebook/authenticate/get', api.facebook.authenticate.get
 app.get '/api/facebook/photos/:album', api.facebook.photos
 app.get '/api/mendeley/papers', api.mendeley.papers
+app.get '/api/dropbox/authenticate/request/:user', api.dropbox.authenticate.request
+app.get '/api/dropbox/authenticate/get', api.dropbox.authenticate.get
+app.get '/api/dropbox/ls', api.dropbox.ls
 
 # redirect all others to the index (HTML5 history)
 app.get '*', routes.index unless app.get 'env' is 'staging'

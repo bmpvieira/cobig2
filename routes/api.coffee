@@ -5,6 +5,7 @@ querystring = require 'querystring'
 redismod = require 'redis'
 url = require 'url'
 Linkedin = require '../modules/linkedin'
+Dropbox = require '../modules/dropbox'
 
 if process.env.REDISTOGO_URL
   rtg = url.parse(process.env.REDISTOGO_URL)
@@ -35,7 +36,64 @@ linkedin = new Linkedin(
   process.env.LINKEDIN_USER_SECRET
 )
 
+DROPBOX_APP_KEY = process.env.DROPBOX_APP_KEY
+DROPBOX_APP_SECRET = process.env.DROPBOX_APP_SECRET
+DROPBOX_FALLBACK_USER = process.env.DROPBOX_FALLBACK_USER
+
+dropbox = new Dropbox(
+  DROPBOX_APP_KEY
+  DROPBOX_APP_SECRET
+)
+
 module.exports = exports =
+  dropbox:
+    authenticate:
+      request: (req, res) ->
+        return res.json 'Error: no user ID specified' if not req.params.user?
+        dropbox.auth (err, requestToken, requestSecret, url) ->
+          return res.json err if err
+          redis.hmset "dropbox:request:#{requestToken}",
+            'user', req.params.user
+            'secret', requestSecret
+          res.redirect url
+      get: (req, res) ->
+        return res.json 'Error: no token' if not req.query.oauth_token?
+        return res.json 'Error: user refused' if req.query.oauth_problem is "user_refused"
+        requestToken = req.query.oauth_token
+        user_uid = req.query.user_uid
+        redis.hgetall "dropbox:request:#{requestToken}", (err, data) ->
+          return res.json err if err
+          user = data.user
+          requestSecret = data.secret
+          dropbox.getauth requestToken, requestSecret, (err, token, secret, data) ->
+            return res.json err if err
+            console.log data
+            redis.hmset "dropbox:#{user}",
+              'token', token
+              'secret', secret
+              'user_uid', data.uid
+              (err) ->
+                return res.json err if err
+                res.json 'success'
+    ls: (req, res, next) ->
+      authUser = DROPBOX_FALLBACK_USER
+      url = "https://api.dropbox.com/1/metadata/sandbox"
+      redis.hgetall "dropbox:#{authUser}", (err, data) ->
+        return next err if err
+        return res.json 'autentication needed' if not data?
+        auth_dropbox = new Dropbox(
+          DROPBOX_APP_KEY
+          DROPBOX_APP_SECRET
+          data.token
+          data.secret
+        )
+        auth_dropbox.get url, (err, data) =>
+          return next err if err
+          try
+            JSONdata = JSON.parse data
+          catch error
+            next error
+          res.json data: JSONdata
   linkedin:
     authenticate: 
       request: (req, res) ->
