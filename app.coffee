@@ -43,8 +43,10 @@ app.get '/templates/:name', routes.templates
 app.get '/partials/:name', routes.partials
 
 # JSON API
-app.get '/api/linkedin/members', api.linkedin.members
-app.get '/api/linkedin/members/:user', api.linkedin.members
+app.get '/api/linkedin/team', api.linkedin.members
+app.get '/api/linkedin/team/:user', api.linkedin.members
+app.get '/api/linkedin/:folder', api.linkedin.getMembersFromDropbox
+app.get '/api/linkedin/:folder/:user', api.linkedin.getMembersFromDropbox
 app.get '/api/linkedin/authenticate/request/:user', api.linkedin.authenticate.request
 app.get '/api/linkedin/authenticate/get', api.linkedin.authenticate.get
 app.get '/api/facebook/authenticate/request/:user', api.facebook.authenticate.request

@@ -24,7 +24,5 @@ module.exports = exports =
       @consumer.getOAuthAccessToken token, secret, next
     put: (filename, post_body, post_content_type, next) ->
       @consumer.put "https://api-content.dropbox.com/1/files_put/sandbox/#{filename}", @_userToken, @_userKey, post_body, post_content_type, (err, data) ->
-        console.log err
-        console.log data
         return next err if err
         next null, data

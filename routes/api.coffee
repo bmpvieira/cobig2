@@ -111,7 +111,6 @@ module.exports = exports = API =
           callback data
     files: (req, res, next) ->
       API.dropbox.get req.params.first, req.params.second, (data) ->
-        console.log data
         try
           JSONdata = JSON.parse data
           res.json JSONdata
@@ -143,7 +142,7 @@ module.exports = exports = API =
           data.secret
         )
         auth_dropbox.put filename, content, type, (err, data) =>
-          console.log data
+          console.error err if err
   linkedin:
     authenticate: 
       request: (req, res) ->
@@ -171,6 +170,21 @@ module.exports = exports = API =
               (err) ->
                 return res.json err if err
                 res.json 'success'
+    getMembersFromDropbox: (req, res, next) ->
+      if req.params.user?
+        API.dropbox.get req.params.folder, "#{req.params.user}.json", (data) ->
+          try
+            JSONdata = JSON.parse data
+          catch error
+            next error
+          res.json data: JSONdata
+      else
+        API.dropbox.get req.params.folder, 'list.json', (data) ->
+          try
+            JSONdata = JSON.parse data
+          catch error
+            next error
+          res.json data: JSONdata.people.values
     members: (req, res, next) ->
       if req.params.user?
         authUser = req.params.user
@@ -195,20 +209,8 @@ module.exports = exports = API =
           if err?
             if err.statusCode is 401
               # get data from Dropbox archive
-              if req.params.user?
-                API.dropbox.get 'members', "#{req.params.user}.json", (data) ->
-                  try
-                    JSONdata = JSON.parse data
-                  catch error
-                    next error
-                  res.json data: JSONdata
-              else
-                API.dropbox.get 'members', 'list.json', (data) ->
-                  try
-                    JSONdata = JSON.parse data
-                  catch error
-                    next error
-                  res.json data: JSONdata.people.values
+              req.params.folder = 'members'
+              API.getMembersFromDropbox req, res, next
             else
               return next err if err
           else

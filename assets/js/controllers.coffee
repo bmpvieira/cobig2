@@ -19,7 +19,7 @@ angular
             $scope.templateUrl = 'templates/members'
             $scope.getDetails = (id, callback) ->
               if id?
-                API.get {service: 'linkedin', object: 'members', param: id}, (results) =>
+                API.get {service: 'linkedin', object: $routeParams.path, param: id}, (results) =>
                   details = {}
                   details.fields = [
                     title: 'Summary', body: results.data.summary
@@ -36,7 +36,7 @@ angular
                     details.links.push icon: 'twitter', url: twitter
                   callback details
 
-            API.get {service: 'linkedin', object: 'members'}, (members) ->
+            API.get {service: 'linkedin', object: $routeParams.path}, (members) ->
               $scope.thumbnails = members.data
               $scope.$emit 'controllerDone'
 

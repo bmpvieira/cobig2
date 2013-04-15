@@ -35,7 +35,6 @@ angular
           scope.$watch 'title', (val) ->
             if val and $location.$$hash?
               names = val.split(' ')
-              console.log $location.$hash
               username = (names[0].slice(0,1) + names[1]).toLowerCase()
               if username is $location.$$hash
                 getDetailsIfNeeded()
