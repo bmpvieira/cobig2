@@ -1,4 +1,4 @@
-li.thumbnail(ng-class='{span12: detailsShow, span4: !detailsShow}')
+li.thumbnail(ng-class='{span12: detailsShow, span4: !detailsShow}', id='{{id}}')
   button(ng-class='{span4: detailsShow, span12: !detailsShow}')
     .loading
       img.img-polaroid.fadein(
@@ -14,3 +14,4 @@ li.thumbnail(ng-class='{span12: detailsShow, span4: !detailsShow}')
         dt {{field.title}}
         dd {{field.body}}
       a.icon(ng-repeat='link in details.links', class='icon-{{link.icon}}', ng-href='{{link.url}}', target='_blank')
+      span.pull-right(style='color: #999; font-size: .5em;') {{id}}

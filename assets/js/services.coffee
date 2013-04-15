@@ -9,7 +9,7 @@ angular
     ($http) ->
       get: (options, callback) ->
         # Get content from Dropbox using server REST api
-        $http.get("/api/dropbox/files/#{options.file}.#{options.ext}").then callback
+        $http.get("/api/dropbox/files/content/#{options.file}.#{options.ext}").then callback
   ])
   .factory('API', ['$resource',
     ($resource, Globals) ->

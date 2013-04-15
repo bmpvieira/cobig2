@@ -9,8 +9,8 @@ angular
       $scope.hasntDropdown = (item) ->
         'undefined' is typeof item.dropdown ? true : false
   ])
-  .controller('ContentCtrl', ['$scope', '$routeParams', 'Content', 'API'
-    ($scope, $routeParams, Content, API) ->
+  .controller('ContentCtrl', ['$scope', '$routeParams', '$location', 'Content', 'API'
+    ($scope, $routeParams, $location, Content, API) ->
       if $scope.views?
         if $routeParams.path in $scope.views_keys # view has specific template
           view = $scope.views[$routeParams.path]
@@ -35,6 +35,7 @@ angular
                     twitter = "//twitter.com/#{results.data.primaryTwitterAccount.providerAccountName}"
                     details.links.push icon: 'twitter', url: twitter
                   callback details
+
             API.get {service: 'linkedin', object: 'members'}, (members) ->
               $scope.thumbnails = members.data
               $scope.$emit 'controllerDone'

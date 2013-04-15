@@ -45,7 +45,7 @@ dropbox = new Dropbox(
   DROPBOX_APP_SECRET
 )
 
-module.exports = exports =
+module.exports = exports = API =
   dropbox:
     authenticate:
       request: (req, res) ->
@@ -93,12 +93,14 @@ module.exports = exports =
           catch error
             next error
           res.json data: JSONdata
-    files: (req, res, next) ->
+    get: (first, second, callback) ->
       authUser = DROPBOX_FALLBACK_USER
-      url = "https://api-content.dropbox.com/1/files/sandbox/#{req.params.file}"
+      url = "https://api-content.dropbox.com/1/files/sandbox/#{first}/"
+      if second
+        url = url.concat(second)
       redis.hgetall "dropbox:#{authUser}", (err, data) ->
-        return next err if err
-        return res.json 'autentication needed' if not data?
+        return callback err if err
+        return callback 'autentication needed' if not data?
         auth_dropbox = new Dropbox(
           DROPBOX_APP_KEY
           DROPBOX_APP_SECRET
@@ -106,6 +108,14 @@ module.exports = exports =
           data.secret
         )
         auth_dropbox.get url, (err, data) =>
+          callback data
+    files: (req, res, next) ->
+      API.dropbox.get req.params.first, req.params.second, (data) ->
+        console.log data
+        try
+          JSONdata = JSON.parse data
+          res.json JSONdata
+        catch error
           res.send data
     media: (req, res, next) ->
       authUser = DROPBOX_FALLBACK_USER
@@ -121,6 +131,19 @@ module.exports = exports =
         )
         auth_dropbox.get url, (err, data) =>
           request(JSON.parse(data).url).pipe(res)
+    files_put: (filename, content, type) ->
+      authUser = DROPBOX_FALLBACK_USER
+      redis.hgetall "dropbox:#{authUser}", (err, data) ->
+        return next err if err
+        return res.json 'autentication needed' if not data?
+        auth_dropbox = new Dropbox(
+          DROPBOX_APP_KEY
+          DROPBOX_APP_SECRET
+          data.token
+          data.secret
+        )
+        auth_dropbox.put filename, content, type, (err, data) =>
+          console.log data
   linkedin:
     authenticate: 
       request: (req, res) ->
@@ -152,7 +175,7 @@ module.exports = exports =
       if req.params.user?
         authUser = req.params.user
         url = "http://api.linkedin.com/v1/people/id=#{req.params.user}" +
-          ":(email-address,summary,public-profile-url,primary-twitter-account)" +
+          ":(id,first-name,last-name,email-address,summary,public-profile-url,primary-twitter-account)" +
           "?format=json"
       else
         authUser = LINKEDIN_FALLBACK_USER
@@ -170,17 +193,22 @@ module.exports = exports =
         )
         auth_linkedin.get url, (err, data) =>
           if err?
-            if err.statusCode is 401 and not req.params.user?
-              # if fallback_user auth failed, try with linkedin app tokens
-              # this could be default if app tokens wheren't invalidated
-              # so often. TODO: Find why those invalidations happen
-              linkedin.get url, (err, data) ->
-                return next err if err
-                try
-                  JSONdata = JSON.parse data
-                catch error
-                  next error
-                res.json data: JSONdata.people.values
+            if err.statusCode is 401
+              # get data from Dropbox archive
+              if req.params.user?
+                API.dropbox.get 'members', "#{req.params.user}.json", (data) ->
+                  try
+                    JSONdata = JSON.parse data
+                  catch error
+                    next error
+                  res.json data: JSONdata
+              else
+                API.dropbox.get 'members', 'list.json', (data) ->
+                  try
+                    JSONdata = JSON.parse data
+                  catch error
+                    next error
+                  res.json data: JSONdata.people.values
             else
               return next err if err
           else
@@ -190,8 +218,10 @@ module.exports = exports =
               next error
             if req.params.user?
               res.json data: JSONdata
+              API.dropbox.files_put "members/#{JSONdata.id}_#{JSONdata.firstName}_#{JSONdata.lastName}.json", data, 'application/json'
             else
               res.json data: JSONdata.people.values
+              API.dropbox.files_put "members/list.json", data, 'application/json'
   mendeley:
     papers: (req, res) ->
       req.pipe(request("http://api.mendeley.com/oapi/documents/groups/#{MENDELEY_GROUP}/docs/?details=true&consumer_key=#{MENDELEY_CONSUMER_KEY}")).pipe(res)

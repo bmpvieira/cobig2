@@ -54,8 +54,9 @@ app.get '/api/mendeley/papers', api.mendeley.papers
 app.get '/api/dropbox/authenticate/request/:user', api.dropbox.authenticate.request
 app.get '/api/dropbox/authenticate/get', api.dropbox.authenticate.get
 app.get '/api/dropbox/ls', api.dropbox.ls
-app.get '/api/dropbox/files/:file', api.dropbox.files
+app.get '/api/dropbox/files/:first/:second?', api.dropbox.files
 app.get '/media/:file', api.dropbox.media
+app.get '/api/dropbox/files_put/:file', api.dropbox.files_put
 
 # redirect all others to the index (HTML5 history)
 app.get '*', routes.index unless app.get 'env' is 'staging'
