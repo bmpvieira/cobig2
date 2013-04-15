@@ -133,8 +133,8 @@ module.exports = exports = API =
     files_put: (filename, content, type) ->
       authUser = DROPBOX_FALLBACK_USER
       redis.hgetall "dropbox:#{authUser}", (err, data) ->
-        return next err if err
-        return res.json 'autentication needed' if not data?
+        return console.error  err if err
+        return console.error 'autentication needed' if not data?
         auth_dropbox = new Dropbox(
           DROPBOX_APP_KEY
           DROPBOX_APP_SECRET
