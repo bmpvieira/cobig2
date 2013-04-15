@@ -175,16 +175,19 @@ module.exports = exports = API =
         API.dropbox.get req.params.folder, "#{req.params.user}.json", (data) ->
           try
             JSONdata = JSON.parse data
+            res.json data: JSONdata
           catch error
             next error
-          res.json data: JSONdata
       else
         API.dropbox.get req.params.folder, 'list.json', (data) ->
           try
             JSONdata = JSON.parse data
+            if JSONdata.people?
+              res.json data: JSONdata.people.values
+            else
+              res.json error: "No people: #{JSONdata}"
           catch error
             next error
-          res.json data: JSONdata.people.values
     members: (req, res, next) ->
       if req.params.user?
         authUser = req.params.user
