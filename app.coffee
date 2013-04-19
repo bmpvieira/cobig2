@@ -45,10 +45,11 @@ app.get '/partials/:name', routes.partials
 # JSON API
 app.get '/api/linkedin/team', api.linkedin.members
 app.get '/api/linkedin/team/:user', api.linkedin.members
-app.get '/api/linkedin/:folder', api.linkedin.getMembersFromDropbox
-app.get '/api/linkedin/:folder/:user', api.linkedin.getMembersFromDropbox
+app.get '/api/linkedin/get/*', api.linkedin.get unless 'production' is app.get 'env'
 app.get '/api/linkedin/authenticate/request/:user', api.linkedin.authenticate.request
 app.get '/api/linkedin/authenticate/get', api.linkedin.authenticate.get
+app.get '/api/linkedin/:folder', api.linkedin.getMembersFromDropbox
+app.get '/api/linkedin/:folder/:user', api.linkedin.getMembersFromDropbox
 app.get '/api/facebook/authenticate/request/:user', api.facebook.authenticate.request
 app.get '/api/facebook/authenticate/get', api.facebook.authenticate.get
 app.get '/api/facebook/photos/:album', api.facebook.photos

@@ -170,6 +170,21 @@ module.exports = exports = API =
               (err) ->
                 return res.json err if err
                 res.json 'success'
+    get: (req, res, next) ->
+      authUser = LINKEDIN_FALLBACK_USER
+      url = req.url.replace '/api/linkedin/get/', 'http://api.linkedin.com/v1/'
+      redis.hgetall "linkedin:#{authUser}", (err, data) ->
+        return next err if err
+        return res.json 'autentication needed' if not data?
+        auth_linkedin = new Linkedin(
+          LINKEDIN_API_KEY
+          LINKEDIN_API_SECRET
+          data.token
+          data.secret
+        )
+        auth_linkedin.get url, (err, data) =>
+          return next err if err
+          res.send data
     getMembersFromDropbox: (req, res, next) ->
       if req.params.user?
         API.dropbox.get req.params.folder, "#{req.params.user}.json", (data) ->

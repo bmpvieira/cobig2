@@ -12,3 +12,9 @@ set -x FACEBOOK_REDIRECT /api/facebook/authenticate/get
 set -x SESSION_SECRET 'trololololo' # for express session
 set -x HOST http://localhost:3000
 set -x GANALYTICS UA-xxxxxxxx-x # Google Analytics
+set -x DROPBOX_APP_KEY xxxxxxxxxxxxxxx
+set -x DROPBOX_APP_SECRET xxxxxxxxxxxxxxx
+set -x DROPBOX_FALLBACK_USER username
+# visit /dropbox/authenticate/request/username to
+# get the token and secret needed for the website to
+# fetch the content from the Dropbox API
