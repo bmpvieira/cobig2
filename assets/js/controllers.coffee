@@ -61,11 +61,7 @@ angular
           $scope.getDetails = (id, callback) ->
             API.get {service: 'facebook', object: 'authenticate\\/request', param: id}, (data) ->
               details = {}
-              details.links = [
-                icon: 'linkedin', url: "api/linkedin/authenticate/request/#{id}"
-              ,
-                icon: 'facebook', url: "api/facebook/authenticate/request/#{id}"
-              ]
+              details.unescapedHtml = "<h4>LinkedIn authorization</h4><p>Please click the button below and sign in to LinkedIn, so that CoBiG² website can fetch your profile data:</p><a class='btn btn-primary' href='/api/linkedin/authenticate/request/#{id}' target='_self'><i class='icon-linkedin'></i> Sign in</a>"
               callback details
           API.get {service: 'linkedin', object: 'members'}, (members) ->
             $scope.users = members.data

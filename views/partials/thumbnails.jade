@@ -10,6 +10,7 @@ li.thumbnail(ng-class='{span12: detailsShow, span4: !detailsShow}', id='{{id}}')
     p {{body}}
   .span8(ng-cloak, ng-class='{"app-show": detailsShow, "app-hide": !detailsShow}')
     .details(ng-cloak, ng-show='details')
+      p(ng-bind-html-unsafe='details.unescapedHtml')
       dl(ng-repeat='field in details.fields')
         dt {{field.title}}
         dd {{field.body}}
