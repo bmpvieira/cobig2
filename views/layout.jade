@@ -21,7 +21,7 @@ html(lang='en', ng-app="app")
           div(ng-view)
 
     block js
-      != js('base64') //- base64 codec
+      //- != js('base64') //- base64 codec
       //- != js('/components/marked/lib/marked.js') //- markdown codec
       //- script(scr='//d2i6acgkizgokx.cloudfront.net/js/marked.09585bb19d4f250fa8ea03c9879503a0.min.js')
       != js('marked.09585bb19d4f250fa8ea03c9879503a0.min.js')

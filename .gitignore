@@ -1,4 +1,5 @@
 node_modules
+backups
 assets/components
 credentials.json
 .c9revisions
