@@ -226,9 +226,10 @@ module.exports = exports = API =
         auth_linkedin.get url, (err, data) =>
           if err?
             if err.statusCode is 401
+              console.error JSON.stringify err
               # get data from Dropbox archive
               req.params.folder = 'members'
-              API.getMembersFromDropbox req, res, next
+              API.linkedin.getMembersFromDropbox req, res, next
             else
               return next err if err
           else
