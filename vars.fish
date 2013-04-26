@@ -1,3 +1,4 @@
+set -x NODE_ENV development
 set -x LINKEDIN_API_KEY xxxxxxxxxxxx
 set -x LINKEDIN_API_SECRET xxxxxxxxxxxxxxxx
 set -x LINKEDIN_USER_TOKEN xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx

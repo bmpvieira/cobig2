@@ -45,6 +45,11 @@ dropbox = new Dropbox(
   DROPBOX_APP_SECRET
 )
 
+if process.env.NODE_ENV in ['development', 'staging']
+  DROPBOX_ENV_FOLDER = 'cobig2_staging'
+else if process.env.NODE_ENV is 'production'
+  DROPBOX_ENV_FOLDER = 'cobig2_production'
+
 module.exports = exports = API =
   dropbox:
     authenticate:
@@ -95,7 +100,7 @@ module.exports = exports = API =
           res.json data: JSONdata
     get: (first, second, callback) ->
       authUser = DROPBOX_FALLBACK_USER
-      url = "https://api-content.dropbox.com/1/files/sandbox/#{first}/"
+      url = "https://api-content.dropbox.com/1/files/dropbox/#{DROPBOX_ENV_FOLDER}/#{first}/"
       if second
         url = url.concat(second)
       redis.hgetall "dropbox:#{authUser}", (err, data) ->
