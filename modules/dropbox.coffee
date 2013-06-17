@@ -23,6 +23,6 @@ module.exports = exports =
     getauth: (token, secret, next) ->
       @consumer.getOAuthAccessToken token, secret, next
     put: (filename, post_body, post_content_type, next) ->
-      @consumer.put "https://api-content.dropbox.com/1/files_put/sandbox/#{filename}", @_userToken, @_userKey, post_body, post_content_type, (err, data) ->
+      @consumer.put "https://api-content.dropbox.com/1/files_put/dropbox/#{filename}", @_userToken, @_userKey, post_body, post_content_type, (err, data) =>
         return next err if err
         next null, data

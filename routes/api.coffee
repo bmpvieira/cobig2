@@ -244,10 +244,10 @@ module.exports = exports = API =
               next error
             if req.params.user?
               res.json data: JSONdata
-              API.dropbox.files_put "members/#{JSONdata.id}_#{JSONdata.firstName}_#{JSONdata.lastName}.json", data, 'application/json'
+              API.dropbox.files_put "#{DROPBOX_ENV_FOLDER}/members/#{JSONdata.id}_#{JSONdata.firstName}_#{JSONdata.lastName}.json", data, 'application/json'
             else
               res.json data: JSONdata.people.values
-              API.dropbox.files_put "members/list.json", data, 'application/json'
+              API.dropbox.files_put "#{DROPBOX_ENV_FOLDER}/members/list.json", data, 'application/json'
   mendeley:
     papers: (req, res) ->
       req.pipe(request("http://api.mendeley.com/oapi/documents/groups/#{MENDELEY_GROUP}/docs/?details=true&consumer_key=#{MENDELEY_CONSUMER_KEY}")).pipe(res)
