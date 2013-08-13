@@ -5,7 +5,7 @@
       br
       h1 Papers
       .papers
-        ul.unstyled(ng-repeat='paper in papers | filter: search | orderBy: year')
+        ul.unstyled(ng-repeat='paper in papers | orderBy: "-year" | filter: search ')
           li
             span(ng-repeat='author in paper.authors') {{author.surname}} {{author.forename[0]}}{{$last && ': ' || ', '}}
             a(ng-href='{{paper.url}}') {{paper.title}} 

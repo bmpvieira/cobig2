@@ -250,7 +250,7 @@ module.exports = exports = API =
               API.dropbox.files_put "#{DROPBOX_ENV_FOLDER}/members/list.json", data, 'application/json'
   mendeley:
     papers: (req, res) ->
-      req.pipe(request("http://api.mendeley.com/oapi/documents/groups/#{MENDELEY_GROUP}/docs/?details=true&consumer_key=#{MENDELEY_CONSUMER_KEY}")).pipe(res)
+      req.pipe(request("http://api.mendeley.com/oapi/documents/groups/#{MENDELEY_GROUP}/docs/?details=true&consumer_key=#{MENDELEY_CONSUMER_KEY}&items=1000")).pipe(res)
   facebook:
     photos: (req, res) ->
       redis.hgetall "facebook:#{LINKEDIN_FALLBACK_USER}", (err, data) ->
