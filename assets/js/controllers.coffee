@@ -45,6 +45,9 @@ angular
             $scope.templateUrl = 'templates/papers'
             API.get {service: 'mendeley', object: 'papers'}, (papers) ->
               $scope.papers = papers.documents
+              for paper in $scope.papers
+                for author in paper.authors
+                  author.initials = author.forename.split(" ").map((e) -> return e[0]).join("")
               $scope.$emit 'controllerDone'
 
           # Photos

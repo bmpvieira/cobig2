@@ -8,7 +8,7 @@
       .papers
         ul(ng-repeat='paper in papers | orderBy: "-year" | filter: search ')
           li
-            span(ng-repeat='author in paper.authors') {{author.surname}} {{author.forename[0]}}{{$last && ': ' || ', '}}
+            span(ng-repeat='author in paper.authors') {{author.surname}} {{author.initials}}{{$last && ': ' || ', '}}
             a(ng-href='{{paper.url}}') {{paper.title}} 
             em {{paper.publisher}} 
             | {{paper.year}}, 
